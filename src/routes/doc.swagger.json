@@ -1,0 +1,481 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "API Exercita 365",
+    "description": "API de locais fitness",
+    "version": "1.0.0"
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "apiKeyAuth": {
+      "type": "apiKey",
+      "in": "header",
+      "name": "Authorization",
+      "description": "Bearer <token>"
+    }
+  },
+  "paths": {
+    "/login": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para efetuar Log In",
+        "parameters": [
+          {
+            "name": "logIn",
+            "in": "body",
+            "description": "Usuário/email e senha",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "email": {
+                  "type": "string",
+                  "example": "exemplo@exemplo.com"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "123tgr76uy"
+                }
+              },
+              "required": [
+                "email",
+                "senha"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/usuario/": {
+      "post": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para cadastrar um usuário",
+        "parameters": [
+          {
+            "name": "cadastraUsuario",
+            "in": "body",
+            "description": "Dados do usuário",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Lima Barreto"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "masculino"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "11122233344"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lima@barreto.com"
+                },
+                "endereco": {
+                  "type": "string",
+                  "example": "Avenida das Acácias, número: 666"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "1w89!jhdy1"
+                },
+                "dataNascimento": {
+                  "type": "string",
+                  "example": "1999-03-31"
+                }
+              },
+              "required": [
+                "nome",
+                "sexo",
+                "cpf",
+                "email",
+                "endereco",
+                "senha",
+                "dataNascimento"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/": {
+      "post": {
+        "tags": [
+          "Locais"
+        ],
+        "description": "Endpoint para cadastra novo local",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "cadastrarLocal",
+            "in": "body",
+            "description": "Detalhes do local a ser cadastrado",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nomeLocal": {
+                  "type": "string",
+                  "example": "Praça do lazer"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "Área com pista de caminha e quadras poliesportivas"
+                },
+                "localidade": {
+                  "type": "string",
+                  "example": "Passeio dos Guararapes"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88000111"
+                },
+                "praticasPermitidas": {
+                  "type": "string",
+                  "example": "Caminha, corrida, futebol, basquete"
+                }
+              },
+              "required": [
+                "nomeLocal",
+                "descricao",
+                "localidade",
+                "cep",
+                "praticasPermitidas"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Locais"
+        ],
+        "description": "Endpoint para listar todos os locais cadastrados",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de todos os locais cadastrados",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "example": "array"
+                },
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "nomeLocal": {
+                      "type": "string",
+                      "example": "Praça do lazer"
+                    },
+                    "descricao": {
+                      "type": "string",
+                      "example": "Área com pista de caminha e quadras poliesportivas"
+                    },
+                    "localidade": {
+                      "type": "string",
+                      "example": "Passeio dos Guararapes"
+                    },
+                    "cep": {
+                      "type": "string",
+                      "example": "88000111"
+                    },
+                    "praticasPermitidas": {
+                      "type": "string",
+                      "example": "Caminha, corrida, futebol, basquete"
+                    }
+                  },
+                  "required": [
+                    "nomeLocal",
+                    "descricao",
+                    "localidade",
+                    "cep",
+                    "praticasPermitidas"
+                  ]
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/{local_id}": {
+      "get": {
+        "tags": [
+          "Locais"
+        ],
+        "description": "Endpoint para mostrar um local específico",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do local buscado",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Locais"
+        ],
+        "description": "Endpoint para deletar um local específico",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do local a ser deletado",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "No Content"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Locais"
+        ],
+        "description": "Endpoint para atualizar um local específico baseado no ID fornecido.",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do local a ser atualizado.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          },
+          {
+            "name": "atualizarLocal",
+            "in": "body",
+            "description": "Detalhes a serem atualizados do local",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nomeLocal": {
+                  "type": "string",
+                  "example": "Praça do lazer"
+                },
+                "descricao": {
+                  "type": "string",
+                  "example": "Área com pista de caminhada e quadras poliesportivas"
+                },
+                "localidade": {
+                  "type": "string",
+                  "example": "Passeio dos Guararapes"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "88000111"
+                },
+                "praticasPermitidas": {
+                  "type": "string",
+                  "example": "Caminhada, corrida, futebol, basquete"
+                }
+              },
+              "required": [
+                "nomeLocal",
+                "descricao",
+                "localidade",
+                "cep",
+                "praticasPermitidas"
+              ]
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    },
+    "/local/maps/{local_id}": {
+      "get": {
+        "tags": [
+          "Link"
+        ],
+        "description": "Endpoint para gerar link do Google Maps",
+        "parameters": [
+          {
+            "name": "local_id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "ID do local buscado",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Created"
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "401": {
+            "description": "Unauthorized"
+          },
+          "404": {
+            "description": "Not Found"
+          },
+          "500": {
+            "description": "Internal Server Error"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "apiKeyAuth": []
+    }
+  ]
+}
