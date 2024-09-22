@@ -13,16 +13,35 @@ class UsuarioController {
     }
   }
 
+  async listarUm(request, response) {
+    try {
+      const { id } = request.params;
+      const { idAutenticado } = request.usuarioId; // assim é atribuído no login
+
+      const usuarioBuscado = await UsuarioService.listarUm(id, idAutenticado);
+      if (!usuarioBuscado) {
+        return response
+          .status(400)
+          .json({ mensagem: "Não foi possível exibir o usuário ou não possui permissão" }); //}
+      }
+      return response.status(200).json(usuario); //
+    } catch (error) {
+      return response.status(500).json({ mensagem: "Erro ao exibir usuário" });
+    }
+  }
   async criar(request, response) {
     try {
       const { body } = request;
-      const usuario = await UsuarioService.criar(body);
-      if (!usuario)
+      const { usuarioCriado, enderecoCriado } = await UsuarioService.criar(
+        body
+      );
+
+      if (!usuarioCriado)
         return response
           .status(400)
           .json({ message: "email ou CPF já cadastrados!" });
-
-      return response.status(201).json(usuario);
+      // if(!enderecoCriado){}
+      return response.status(201).json(usuarioCriado, enderecoCriado);
     } catch (error) {
       console.log(error);
       return response
@@ -45,7 +64,7 @@ class UsuarioController {
         return response
           .status(404)
           .json({ mensagem: "Usuário não encontrado para o ID fornecido" });
-      } 
+      }
       response.status(201).json({
         Nome: usuarioAtualizado.nome,
         Email: usuarioAtualizado.email,
