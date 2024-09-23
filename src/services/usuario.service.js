@@ -1,5 +1,4 @@
 const { Op } = require("sequelize");
-const { hash } = require("bcryptjs");
 const Usuario = require("../models/Usuario");
 const Local = require("../models/Local");
 const Endereco = require("../models/Endereco");
@@ -15,7 +14,9 @@ class UsuarioService {
 
   async listarUm(id, idAutenticado){
 
-    const usuarioBuscado = await Usuario.findByPk(id);
+    const usuarioBuscado = await Usuario.findByPk(id,{
+      include: [{model: Endereco, as: 'enderecos'}]
+    });
 
     if(!usuarioBuscado) return null
     if (usuarioBuscado.id !== idAutenticado) return null
@@ -70,7 +71,7 @@ class UsuarioService {
     const enderecoCriado = await Endereco.create({
       logradouro: enderecamento.logradouro,
       numero: enderecamento.numero,
-      bairr: enderecamento.bairro,
+      bairro: enderecamento.bairro,
       cidade: enderecamento.cidade,
       estado: enderecamento.estado,
       cep: enderecamento.cep,
