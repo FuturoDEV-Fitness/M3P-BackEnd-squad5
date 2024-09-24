@@ -3,7 +3,10 @@ const UsuarioController = require('../controllers/UsuarioController')
 
 const usuariosRoutes = new Router()
 
+usuariosRoutes.get('/', UsuarioController.listar)   
 
+usuariosRoutes.put('/', UsuarioController.atualizar)
+usuariosRoutes.delete('/', UsuarioController.deletar)
 usuariosRoutes.post('/', UsuarioController.criar
         /*
 #swagger.tags = ['Usuário'],
