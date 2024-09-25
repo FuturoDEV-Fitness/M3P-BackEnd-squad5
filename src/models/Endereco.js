@@ -37,6 +37,8 @@ const Endereco = connection.define("enderecos", {
       model: "usuarios",
       key: "id",
     },
+    onDelete: 'CASCADE', // Deleta o endereço quando o usuário for deletado
+    onUpdate: 'CASCADE',
   },
 });
 
