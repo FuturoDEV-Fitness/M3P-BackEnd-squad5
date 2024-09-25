@@ -76,25 +76,23 @@ class UsuarioService {
       estado: enderecamento.estado,
       cep: enderecamento.cep,
       complemento: enderecamento.complemento,
-      usuarioId: idUsuario, // <---
+      usuarioId: idUsuario, 
     });
     const { id: enderecoId } = enderecoCriado;
-    //Usuario.hasOne(Endereco, { foreignKey: 'usuarioId' }); <-- no modelo
+   
     return { usuarioCriado, enderecoCriado };
   }
 
   async atualizar(id, body) {
-    /*Não pode editar o CPF. */
+   
     const usuarioEncontrado = await Usuario.findByPk(id);
     if (!usuarioEncontrado) return null;
 
-    const senhaCrypto = await hash(body.senha, 8);
     usuarioEncontrado.nome = body.nome;
     usuarioEncontrado.email = body.email;
     usuarioEncontrado.sexo = body.sexo;
     //usuarioEncontrado.cpf = body.cpf
-    usuarioEncontrado.endereco = body.endereco;
-    usuarioEncontrado.senha = senhaCrypto;
+    usuarioEncontrado.senha = body.senha;
 
     usuarioEncontrado.save();
 
