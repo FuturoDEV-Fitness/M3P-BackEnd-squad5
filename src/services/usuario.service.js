@@ -12,17 +12,15 @@ class UsuarioService {
     return usuarios;
   }
 
-  async listarUm(id, idAutenticado){
-
-    const usuarioBuscado = await Usuario.findByPk(id,{
-      include: [{model: Endereco, as: 'enderecos'}]
+  async listarUm(id, idAutenticado) {
+    const usuarioBuscado = await Usuario.findByPk(id, {
+      include: [{ model: Endereco, as: "enderecos" }],
     });
 
-    if(!usuarioBuscado) return null
-    if (usuarioBuscado.id !== idAutenticado) return null
-    //não possui "autorização"
+    if (!usuarioBuscado) return null;
+    if (usuarioBuscado.id !== idAutenticado) return null;
 
-    return usuarioBuscado
+    return usuarioBuscado;
   }
   async criar(body) {
     /*Não pode cadastrar pessoas com o mesmo CPF. */
@@ -76,31 +74,70 @@ class UsuarioService {
       estado: enderecamento.estado,
       cep: enderecamento.cep,
       complemento: enderecamento.complemento,
-      usuarioId: idUsuario, 
+      usuarioId: idUsuario,
     });
     const { id: enderecoId } = enderecoCriado;
-   
+
     return { usuarioCriado, enderecoCriado };
   }
 
-  async atualizar(id, body) {
-   
+  async atualizar(id, body, idAutenticado) {
     const usuarioEncontrado = await Usuario.findByPk(id);
     if (!usuarioEncontrado) return null;
+    if (usuarioEncontrado.id !== idAutenticado) return null;
 
-    usuarioEncontrado.nome = body.nome;
-    usuarioEncontrado.email = body.email;
-    usuarioEncontrado.sexo = body.sexo;
-    //usuarioEncontrado.cpf = body.cpf
-    usuarioEncontrado.senha = body.senha;
+    const {
+      body: nome,
+      email,
+      sexo,
+      cpf,
+      dataNascimento,
+      senha,
+      adress: { logradouro, numero, bairro, cidade, estado, cep, complemento },
+    } = body;
+
+    const corpo = { nome, email, sexo, cpf, dataNascimento, senha };
+    const enderecamento = {
+      logradouro,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      cep,
+      complemento,
+    };
+
+    usuarioEncontrado.nome = corpo.nome;
+    usuarioEncontrado.email = corpo.email;
+    usuarioEncontrado.sexo = corpo.sexo;
+    //usuarioEncontrado.cpf = corpo.cpf
+    usuarioEncontrado.senha = corpo.senha;
 
     usuarioEncontrado.save();
 
     const usuarioAtualizado = await Usuario.findByPk(id);
+    //atualizar endereço
+    const idAtualizado = usuarioAtualizado.id;
+    const enderecoEncontrado = await Endereco.findOne({
+      where: {
+        usuarioId: idAtualizado,
+      },
+    });
+
+    (enderecoEncontrado.logradouro = enderecamento.logradouro),
+      (enderecoEncontrado.numero = enderecamento.numero),
+      (enderecoEncontrado.bairro = enderecamento.bairro),
+      (enderecoEncontrado.cidade = enderecamento.cidade),
+      (enderecoEncontrado.estado = enderecamento.estado),
+      (enderecoEncontrado.cep = enderecamento.cep),
+      (enderecoEncontrado.complemento = enderecamento.complemento),
+      (enderecoEncontrado.usuarioId = enderecamento.idAtualizado);
+
+    enderecoEncontrado.save();
     return usuarioAtualizado;
   }
 
-  async deletar(id) {
+  async deletar(id, idAutenticado) {
     /*Não pode deletar usuários com locais para atividade física associados */
     const usuarioExistente = await Usuario.findByPk(id); //usuarios.find((usuario) => usuario.id === id);
 
@@ -117,6 +154,7 @@ class UsuarioService {
     });
 
     if (usuarioComLocal) return null;
+    if (usuarioComLocal.id !== idAutenticado) return null;
 
     await usuarioExistente.destroy();
     return true;
