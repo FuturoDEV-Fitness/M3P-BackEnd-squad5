@@ -5,7 +5,6 @@ const Endereco = require("../models/Endereco");
 
 class UsuarioService {
   async listar() {
-    /*Não pode listar dados sensíveis como CPF, endereço, data de nascimento e senha de login. */
     const usuarios = await usuarioModel.findAll({
       attributes: ["id", "nome", "email", "sexo", "createdAt", "updatedAt"],
     });
@@ -58,7 +57,6 @@ class UsuarioService {
     if (usuarioExistente) {
       return null;
     }
-    //const senhaCrypto = await hash(senha, 8); <-- está no modelo
     const usuarioCriado = await Usuario.create({
       nome: corpo.nome,
       email: corpo,
@@ -78,9 +76,8 @@ class UsuarioService {
       estado: enderecamento.estado,
       cep: enderecamento.cep,
       complemento: enderecamento.complemento,
-      usuarioId: idUsuario,
+      usuario_id: idUsuario,
     });
-    const { id: enderecoId } = enderecoCriado;
 
     return { usuarioCriado, enderecoCriado };
   }
@@ -119,7 +116,7 @@ class UsuarioService {
     usuarioEncontrado.save();
 
     const usuarioAtualizado = await Usuario.findByPk(id);
-    //atualizar endereço
+    
     const idAtualizado = usuarioAtualizado.id;
     const enderecoEncontrado = await Endereco.findOne({
       where: {

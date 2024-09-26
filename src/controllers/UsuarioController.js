@@ -24,7 +24,7 @@ class UsuarioController {
           .status(400)
           .json({ mensagem: "Não foi possível exibir o usuário ou não possui permissão" }); //}
       }
-      return response.status(200).json(usuario); //
+      return response.status(200).json(usuarioBuscado); //
     } catch (error) {
       return response.status(500).json({ mensagem: "Erro ao exibir usuário" });
     }
