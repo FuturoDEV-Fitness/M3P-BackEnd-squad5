@@ -23,7 +23,6 @@ class UsuarioService {
     return usuarioBuscado;
   }
   async criar(body) {
-    /*Não pode cadastrar pessoas com o mesmo CPF. */
     const {
       body: nome,
       email,
@@ -31,7 +30,13 @@ class UsuarioService {
       cpf,
       dataNascimento,
       senha,
-      adress: { logradouro, numero, bairro, cidade, estado, cep, complemento },
+      logradouro,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      cep,
+      complemento,
     } = body;
 
     const corpo = { nome, email, sexo, cpf, dataNascimento, senha };
@@ -47,7 +52,7 @@ class UsuarioService {
 
     const usuarioExistente = await Usuario.findOne({
       where: {
-        [Op.and]: [{ email: corpo.email }, { cpf: corpo.cpf }],
+        [Op.or]: [{ email: corpo.email }, { cpf: corpo.cpf }],
       },
     });
     if (usuarioExistente) {
@@ -59,7 +64,6 @@ class UsuarioService {
       email: corpo,
       sexo: corpo.sexo,
       cpf: corpo.cpf,
-      //enderecamento
       dataNascimento: corpo.dataNascimento,
       senha: corpo.senha,
     });
@@ -87,13 +91,13 @@ class UsuarioService {
     if (usuarioEncontrado.id !== idAutenticado) return null;
 
     const {
-      body: nome,
+      nome,
       email,
       sexo,
       cpf,
       dataNascimento,
       senha,
-      adress: { logradouro, numero, bairro, cidade, estado, cep, complemento },
+      logradouro, numero, bairro, cidade, estado, cep, complemento
     } = body;
 
     const corpo = { nome, email, sexo, cpf, dataNascimento, senha };
@@ -110,7 +114,6 @@ class UsuarioService {
     usuarioEncontrado.nome = corpo.nome;
     usuarioEncontrado.email = corpo.email;
     usuarioEncontrado.sexo = corpo.sexo;
-    //usuarioEncontrado.cpf = corpo.cpf
     usuarioEncontrado.senha = corpo.senha;
 
     usuarioEncontrado.save();
@@ -120,7 +123,7 @@ class UsuarioService {
     const idAtualizado = usuarioAtualizado.id;
     const enderecoEncontrado = await Endereco.findOne({
       where: {
-        usuarioId: idAtualizado,
+        usuario_id: idAtualizado,
       },
     });
 
@@ -131,15 +134,14 @@ class UsuarioService {
       (enderecoEncontrado.estado = enderecamento.estado),
       (enderecoEncontrado.cep = enderecamento.cep),
       (enderecoEncontrado.complemento = enderecamento.complemento),
-      (enderecoEncontrado.usuarioId = enderecamento.idAtualizado);
+      (enderecoEncontrado.usuario_id = enderecamento.idAtualizado);
 
     enderecoEncontrado.save();
     return usuarioAtualizado;
   }
 
   async deletar(id, idAutenticado) {
-    /*Não pode deletar usuários com locais para atividade física associados */
-    const usuarioExistente = await Usuario.findByPk(id); //usuarios.find((usuario) => usuario.id === id);
+    const usuarioExistente = await Usuario.findByPk(id); 
 
     if (!usuarioExistente) return false;
 
