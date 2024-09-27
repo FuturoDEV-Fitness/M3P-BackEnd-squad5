@@ -5,8 +5,8 @@ const Endereco = require("../models/Endereco");
 
 class UsuarioService {
   async listar() {
-    const usuarios = await usuarioModel.findAll({
-      attributes: ["id", "nome", "email", "sexo", "createdAt", "updatedAt"],
+    const usuarios = await Usuario.findAll({
+      attributes: ["id", "nome", "email", "sexo"],
     });
     return usuarios;
   }
@@ -23,7 +23,7 @@ class UsuarioService {
   }
   async criar(body) {
     const {
-      body: nome,
+      nome,
       email,
       sexo,
       cpf,
@@ -147,7 +147,7 @@ class UsuarioService {
         {
           model: Local,
           attributes: [],
-          where: { idUsuario: id },
+          where: { id_usuario: id }, 
         },
       ],
     });
