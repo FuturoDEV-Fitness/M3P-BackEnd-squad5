@@ -24,7 +24,7 @@ class UsuarioController {
           .status(400)
           .json({ mensagem: "Não foi possível exibir o usuário ou não possui permissão" }); //}
       }
-      return response.status(200).json(usuario); //
+      return response.status(200).json(usuarioBuscado); //
     } catch (error) {
       return response.status(500).json({ mensagem: "Erro ao exibir usuário" });
     }
@@ -54,24 +54,15 @@ class UsuarioController {
     try {
       const { id } = request.params;
       const body = request.body;
-      const usuarioAtualizado = await UsuarioService.atualizar(id, body);
-      if (usuarioAtualizado.id !== request.usuarioId) {
-        return response.status(401).json({
-          mensagem: "Você não possui permissão para atualizar o usuário",
-        });
-      }
+      const { idAutenticado } = request.usuarioId;
+      const usuarioAtualizado = await UsuarioService.atualizar(id, body, idAutenticado);
+     
       if (!usuarioAtualizado) {
         return response
           .status(404)
-          .json({ mensagem: "Usuário não encontrado para o ID fornecido" });
+          .json({ mensagem: "Usuário não encontrado ou sem permissão para atualizar" });
       }
-      response.status(201).json({
-        Nome: usuarioAtualizado.nome,
-        Email: usuarioAtualizado.email,
-        Sexo: usuarioAtualizado.sexo,
-        CPF: usuarioAtualizado.cpf,
-        Endereço: usuarioAtualizado.endereco,
-      });
+      response.status(201).json(usuarioAtualizado);
     } catch (error) {
       return response
         .status(500)
@@ -81,8 +72,9 @@ class UsuarioController {
   async deletar(request, response) {
     try {
       const { id } = request.params;
+      const { idAutenticado } = request.usuarioId;
 
-      const apagou = await UsuarioService.deletar(id);
+      const apagou = await UsuarioService.deletar(id, idAutenticado);
       if (!apagou) {
         return response
           .status(400)

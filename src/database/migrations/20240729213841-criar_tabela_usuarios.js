@@ -28,10 +28,6 @@ module.exports = {
         unique: true,
         type: Sequelize.STRING,
       },
-      endereco: {
-        type: Sequelize.STRING(200),
-        allowNull: false,
-      },
       senha: {
         type: Sequelize.STRING,
         allowNull: false,
