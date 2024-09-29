@@ -1,20 +1,12 @@
-const {Router} = require('express')
-const UsuarioController = require('../controllers/UsuarioController')
+const { Router } = require('express');
+const UsuarioController = require('../controllers/UsuarioController');
 
-const usuariosRoutes = new Router()
+const usuariosRoutes = new Router();
 
-
-//conferir:
-// schema: {
-//   properties: {
-//     nome: { type: 'string', example: 'Lima Barreto' },
-//     email: { type: 'string', example: 'lima@barreto.com' },
-//     sexo: { type: 'string', example: 'masculino' }
-//   }
 usuariosRoutes.get(
   "/",
   UsuarioController.listar
-  /* 
+  /*
   #swagger.tags = ['Usuário']
   #swagger.description = 'Endpoint para listar todos os usuários'
   #swagger.responses[200] = {
@@ -26,7 +18,7 @@ usuariosRoutes.get(
     }
   }
     #swagger.responses[500] = {
-    description: 'Erro ao  listar usuários'
+    description: 'Erro ao listar usuários'
   }
   */
 );
@@ -50,21 +42,21 @@ usuariosRoutes.get(
       nome: 'Lima Barreto',
       email: 'lima@barreto.com',
       sexo: 'masculino',
-        logradouro: 'Avenida das Acácias',
-        numero: '666',
-        bairro: 'Centro',
-        cidade: 'Rio de Janeiro',
-        estado: 'RJ',
-        cep: '20040-002',
-        complemento: 'Apto 301' }
+      logradouro: 'Avenida das Acácias',
+      numero: '666',
+      bairro: 'Centro',
+      cidade: 'Rio de Janeiro',
+      estado: 'RJ',
+      cep: '20040-002',
+      complemento: 'Apto 301'
     }
- #swagger.responses[404] = {
+  }
+  #swagger.responses[404] = {
     description: 'Usuário não encontrado ou não possui permissão'
   }
-     #swagger.responses[500] = {
+  #swagger.responses[500] = {
     description: 'Erro ao exibir usuário'
   }
-  
   */
 );
 
@@ -104,72 +96,67 @@ usuariosRoutes.put(
   #swagger.responses[201] = {
     description: 'Usuário atualizado com sucesso',
   }
-        #swagger.responses[404] = {
+  #swagger.responses[404] = {
     description: 'Usuário não encontrado ou sem permissão'
   }
-      #swagger.responses[500] = {
+  #swagger.responses[500] = {
     description: 'Erro ao atualizar o usuário'
   }
+  */
+);
 
-  */);
+usuariosRoutes.delete(
+  "/:id",
+  UsuarioController.deletar
+  /*
+  #swagger.tags = ['Usuário']
+  #swagger.description = 'Endpoint para excluir um usuário'
+  #swagger.parameters['id'] = {
+    in: 'path',
+    description: 'ID do usuário',
+    required: true,
+    type: 'integer',
+    format: 'int64'
+  }
+  #swagger.responses[204] = {
+    description: 'Usuário excluído com sucesso'
+  }
+  #swagger.responses[400] = {
+    description: 'Não foi possível excluir o usuário ou não possui permissão'
+  }
+  #swagger.responses[500] = {
+    description: 'Erro ao excluir o usuário'
+  }
+  */
+);
 
-  usuariosRoutes.delete(
-    "/:id",
-    UsuarioController.deletar
-    /*
-    #swagger.tags = ['Usuário']
-    #swagger.description = 'Endpoint para excluir um usuário'
-    #swagger.parameters['id'] = {
-      in: 'path',
-      description: 'ID do usuário',
-      required: true,
-      type: 'integer',
-      format: 'int64'
-    }
-    #swagger.responses[204] = {
-      description: 'Usuário excluído com sucesso'
-    }
-    #swagger.responses[400] = {
-      description: 'não foi possível excluir o usuário ou não possui permissão'
-    }
-       #swagger.responses[500] = {
-      description: 'Erro ao excluir um usuário'
-    }
-    */
-  );
-
-
-  // confirmar:
-// schema: {
-//   properties: {
-//     nome: { type: 'string', example: 'Lima Barreto' },
-//     (...)
- usuariosRoutes.post('/', UsuarioController.criar
-        /*
-#swagger.tags = ['Usuário'],
-#swagger.description = 'Endpoint para cadastrar um usuário',
-#swagger.parameters['cadastraUsuario']= {
+usuariosRoutes.post(
+  '/',
+  UsuarioController.criar
+  /*
+  #swagger.tags = ['Usuário']
+  #swagger.description = 'Endpoint para cadastrar um usuário'
+  #swagger.parameters['cadastraUsuario'] = {
     in: 'body',
     description: 'Dados do usuário',
     required: true,
     schema: {
-    $nome: 'Lima Barreto',
-    $sexo: 'masculino',
-    $cpf: '11122233344',
-    $email: 'lima@barreto.com',
-    $senha: '1w89!jhdy1',
-    $dataNascimento: '1999-03-31',
-     $logradouro: 'Avenida das Acácias',
-    $numero: '666',
-    $bairro: 'Centro',
-    $cidade: 'Rio de Janeiro',
-    $estado: 'RJ',
-    $cep: '20040-002',
-    complemento: 'Apto 301'
+      $nome: 'Lima Barreto',
+      $sexo: 'masculino',
+      $cpf: '11122233344',
+      $email: 'lima@barreto.com',
+      $senha: '1w89!jhdy1',
+      $dataNascimento: '1999-03-31',
+      $logradouro: 'Avenida das Acácias',
+      $numero: '666',
+      $bairro: 'Centro',
+      $cidade: 'Rio de Janeiro',
+      $estado: 'RJ',
+      $cep: '20040-002',
+      complemento: 'Apto 301'
     }
-}
-
-#swagger.responses[201] = {
+  }
+  #swagger.responses[201] = {
     description: 'Usuário cadastrado com sucesso',
     schema: {
       nome: 'Lima Barreto',
@@ -177,16 +164,13 @@ usuariosRoutes.put(
       sexo: 'masculino'
     }
   }
-    #swagger.responses[400] = {
+  #swagger.responses[400] = {
     description: 'Não foi possível cadastrar'
   }
-      #swagger.responses[500] = {
+  #swagger.responses[500] = {
     description: 'Erro ao cadastrar o usuário'
   }
+  */
+);
 
-*/
-)
-// 'criarUsuario'
-
-
-module.exports = usuariosRoutes
+module.exports = usuariosRoutes;
