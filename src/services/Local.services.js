@@ -21,6 +21,10 @@ class LocalServices {
   }
 
   async cadastrarLocal(dados, idAutenticado) {
+
+    if (!idAutenticado) {
+      throw new Error("Ação não permitida: usuário não autenticado.");
+    }
     const { praticasPermitidas, ...dadosLocal } = dados;
 
     const localNovo = await Local.create({
