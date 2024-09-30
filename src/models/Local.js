@@ -11,16 +11,28 @@ const Local = connection.define(
       type: DataTypes.STRING(150),
       allowNull: false,
     },
-    descricao: {
+    descricaoLocal: {
       type: DataTypes.STRING(200),
-      allowNull: false,
-    },
-    localidade: {
-      type: DataTypes.STRING(150),
       allowNull: false,
     },
     cep: {
       type: DataTypes.STRING(8),
+      allowNull: false,
+    },
+    endereco: {
+      type: DataTypes.STRING(150),
+      allowNull: false,
+    },
+    bairro: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    cidade: {
+      type: DataTypes.STRING(100),
+      allowNull: false,
+    },
+    estado: {
+      type: DataTypes.STRING(20),
       allowNull: false,
     },
     latitude: {
@@ -31,7 +43,10 @@ const Local = connection.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-   
+    praticasEsportivas:{
+      type: Sequelize.STRING,
+      allowNull: false
+    }, 
     id_usuario: {
       allowNull: true,
       type: DataTypes.INTEGER,
