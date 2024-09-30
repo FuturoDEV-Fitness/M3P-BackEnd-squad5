@@ -25,14 +25,33 @@ class LocalServices {
     if (!idAutenticado) {
       throw new Error("Ação não permitida: usuário não autenticado.");
     }
-    const { praticasPermitidas, ...dadosLocal } = dados;
+    const {
+      nomeLocal,
+      descricaoLocal,
+      cep,
+      endereco,
+      bairro,
+      cidade,
+      estado,
+      latitude,
+      longitude,
+      praticasEsportivas,
+    } = dados;
 
     const localNovo = await Local.create({
-      ...dadosLocal,
+      nomeLocal,
+      descricaoLocal,
+      cep,
+      endereco,
+      bairro,
+      cidade,
+      estado,
+      latitude,
+      longitude,
       id_usuario: idAutenticado,
     });
-    // if (praticasPermitidas && praticasPermitidas.length > 0) ???
-    const praticasCriadas = await praticasPermitidas.map((pratica) =>
+    // if (praticasEsportivas && praticasEsportivas.length > 0) ???
+    const praticasCriadas = await praticasEsportivas.map((pratica) =>
       Pratica.create({ nome: pratica, id_local: localNovo.id })
     );
     /*SE MAP DER PROBLEMAS COM PROMISES:  
@@ -49,29 +68,33 @@ class LocalServices {
       return null;
     }
 
-    const { praticasPermitidas, ...dadosAtualizados } = dados;
+    const { praticasEsportivas, ...dadosAtualizados } = dados;
 
     // Atualizando os dados do local
     localEncontrado.nomeLocal = dadosAtualizados.nomeLocal;
-    localEncontrado.descricao = dadosAtualizados.descricao;
+    localEncontrado.descricaoLocal = dadosAtualizados.descricaoLocal;
     localEncontrado.cep = dadosAtualizados.cep;
+    localEncontrado.endereco = dadosAtualizados.endereco;
+    localEncontrado.bairro = dadosAtualizados.bairro;
+    localEncontrado.cidade = dadosAtualizados.cidade;
+    localEncontrado.estado = dadosAtualizados.estado;
     localEncontrado.latitude = dadosAtualizados.latitude;
     localEncontrado.longitude = dadosAtualizados.longitude;
 
     await localEncontrado.save();
 
     // Gerenciar as práticas (remover antigas e adicionar novas)
-    if (praticasPermitidas && praticasPermitidas.length > 0) {
+    if (praticasEsportivas && praticasEsportivas.length > 0) {
       // Remover práticas que não estão mais associadas ao local
       await Pratica.destroy({
         where: {
           id_local: local_id,
-          nome: { [Op.notIn]: praticasPermitidas },
+          nome: { [Op.notIn]: praticasEsportivas },
         },
       });
 
       // Criar ou manter as práticas associadas ao local
-      for (const pratica of praticasPermitidas) {
+      for (const pratica of praticasEsportivas) {
         await Pratica.findOrCreate({
           where: { nome: pratica, id_local: local_id },
         });
