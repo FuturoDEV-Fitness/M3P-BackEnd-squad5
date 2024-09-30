@@ -1,4 +1,3 @@
-const Usuario = require("../models/Usuario");
 const UsuarioService = require("../services/usuario.service");
 
 class UsuarioController {
@@ -7,6 +6,7 @@ class UsuarioController {
       const listaUsuarios = await UsuarioService.listar();
       return response.json(listaUsuarios);
     } catch (error) {
+      console.error(error);
       return response
         .status(500)
         .json({ mensagem: "Não foi possível listar usuários" });
@@ -16,34 +16,34 @@ class UsuarioController {
   async listarUm(request, response) {
     try {
       const { id } = request.params;
-      const { idAutenticado } = request.usuarioId; // assim é atribuído no login
+      const { idAutenticado } = request.usuarioId;
 
       const usuarioBuscado = await UsuarioService.listarUm(id, idAutenticado);
       if (!usuarioBuscado) {
-        return response
-          .status(400)
-          .json({ mensagem: "Não foi possível exibir o usuário ou não possui permissão" }); //}
+        return response.status(400).json({
+          success: false,
+          error: "Usuário não encontrado ou sem permissão",
+        });
       }
-      return response.status(200).json(usuarioBuscado); //
+      return response.status(200).json(usuarioBuscado);
     } catch (error) {
+      console.error(error);
       return response.status(500).json({ mensagem: "Erro ao exibir usuário" });
     }
   }
+
   async criar(request, response) {
     try {
       const { body } = request;
-      const { usuarioCriado, enderecoCriado } = await UsuarioService.criar(
-        body
-      );
+      const usuarioCriado = await UsuarioService.criar(body);
 
-      if (!usuarioCriado)
-        return response
-          .status(400)
-          .json({ message: "email ou CPF já cadastrados!" });
-      // if(!enderecoCriado){}
-      return response.status(201).json(usuarioCriado, enderecoCriado);
+      if (!usuarioCriado) {
+        return response.status(400).json("Email ou CPF já cadastrados!");
+      }
+
+      return response.status(201).json({ success: true, data: usuarioCriado });
     } catch (error) {
-      console.log(error);
+      console.error(error);
       return response
         .status(500)
         .json({ mensagem: "Erro ao cadastrar usuário" });
@@ -53,22 +53,29 @@ class UsuarioController {
   async atualizar(request, response) {
     try {
       const { id } = request.params;
-      const body = request.body;
+      const { body } = request;
       const { idAutenticado } = request.usuarioId;
-      const usuarioAtualizado = await UsuarioService.atualizar(id, body, idAutenticado);
-     
+      const usuarioAtualizado = await UsuarioService.atualizar(
+        id,
+        body,
+        idAutenticado
+      );
+
       if (!usuarioAtualizado) {
-        return response
-          .status(404)
-          .json({ mensagem: "Usuário não encontrado ou sem permissão para atualizar" });
+        return response.status(404).json({
+          mensagem: "Usuário não encontrado ou sem permissão para atualizar",
+        });
       }
-      response.status(201).json(usuarioAtualizado);
+
+      return response.status(201).json(usuarioAtualizado);
     } catch (error) {
+      console.error(error);
       return response
         .status(500)
         .json({ mensagem: "Não foi possível atualizar o usuário" });
     }
   }
+
   async deletar(request, response) {
     try {
       const { id } = request.params;
@@ -80,8 +87,11 @@ class UsuarioController {
           .status(400)
           .json({ message: "não foi possível excluir o usuário!" });
       }
+
       return response.status(204).end();
     } catch (error) {
+      console.error(error);
+
       return response.status(500).json({ mensagem: "Erro ao excluir usuário" });
     }
   }
