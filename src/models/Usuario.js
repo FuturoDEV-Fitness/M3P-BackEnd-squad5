@@ -3,15 +3,19 @@ const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
 const Local = require("./Local");
 
-
 const Usuario = connection.define(
   "usuarios",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
     nome: {
       type: DataTypes.STRING(150),
       allowNull: false,
     },
-
     sexo: {
       type: DataTypes.ENUM("masculino", "feminino", "outro"),
       allowNull: true,
@@ -25,10 +29,6 @@ const Usuario = connection.define(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-    },
-    endereco: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
     },
     senha: {
       type: DataTypes.STRING,
@@ -44,11 +44,16 @@ const Usuario = connection.define(
   }
 );
 
-// Usuario.hasMany(Local...) --> Associations.js
-
 Usuario.beforeSave((usuario) => {
-  usuario.senha = hashSync(usuario.senha, 10);
+  if (usuario.senha) {
+    usuario.senha = hashSync(usuario.senha, 10);
+  }
   return usuario;
+});
+
+Usuario.hasMany(Local, {
+  foreignKey: "usuarioId",
+  as: "locais",
 });
 
 module.exports = Usuario;
