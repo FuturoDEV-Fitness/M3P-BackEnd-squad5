@@ -34,11 +34,8 @@ module.exports = {
         type: Sequelize.STRING, //"-48.49239"
         //allowNull: true
       },
-      praticasPermitidas:{
-        type: Sequelize.STRING(200),
-        allowNull: false
-      },
-      idUsuario:{
+ 
+      id_usuario:{
         type: Sequelize.INTEGER, //allowNull: false,
         
         references:{

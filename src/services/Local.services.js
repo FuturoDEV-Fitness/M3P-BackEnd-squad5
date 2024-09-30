@@ -1,18 +1,19 @@
 const { where } = require("sequelize");
 const Local = require("../models/Local");
 const Usuario = require("../models/Usuario");
+const Pratica = require("../models/Pratica");
 
 class LocalServices {
   async listarLocais() {
     const locaisGeral = await Local.findAll({
       attributes: ["nomeLocal", "descricao", "cep", "latitude", "longitude"],
-      include: [{ model: Praticas, attributes: ["nome"] }],
+      include: [{ model: Pratica, attributes: ["nome"] }],
     });
     return locaisGeral;
   }
   async listarUmLocal(local_id, idAutenticado) {
     const local = await Local.findByPk(local_id, {
-      include: [{ model: Praticas, attributes: ["nome"] }],
+      include: [{ model: Pratica, attributes: ["nome"] }],
     });
     if (!local || local.id_usuario !== idAutenticado) {
       return null;
@@ -32,7 +33,7 @@ class LocalServices {
     });
     // if (praticasPermitidas && praticasPermitidas.length > 0) ???
     const praticasCriadas = await praticasPermitidas.map((pratica) =>
-      Praticas.create({ nome: pratica, id_local: localNovo.id })
+      Pratica.create({ nome: pratica, id_local: localNovo.id })
     );
     /*SE MAP DER PROBLEMAS COM PROMISES:  
     for (const pratica of praticasEsportivas){
@@ -62,7 +63,7 @@ class LocalServices {
     // Gerenciar as práticas (remover antigas e adicionar novas)
     if (praticasPermitidas && praticasPermitidas.length > 0) {
       // Remover práticas que não estão mais associadas ao local
-      await Praticas.destroy({
+      await Pratica.destroy({
         where: {
           id_local: local_id,
           nome: { [Op.notIn]: praticasPermitidas },
@@ -71,14 +72,14 @@ class LocalServices {
 
       // Criar ou manter as práticas associadas ao local
       for (const pratica of praticasPermitidas) {
-        await Praticas.findOrCreate({
+        await Pratica.findOrCreate({
           where: { nome: pratica, id_local: local_id },
         });
       }
     }
 
     const localAtualizado = await Local.findByPk(local_id, {
-      include: [{ model: Praticas, attributes: ["nome"] }],
+      include: [{ model: Pratica, attributes: ["nome"] }],
     });
 
     return { localEncontrado, localAtualizado };

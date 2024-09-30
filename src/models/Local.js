@@ -31,11 +31,8 @@ const Local = connection.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    praticasPermitidas: {
-      type: DataTypes.STRING(200),
-      allowNull: false,
-    },
-    idUsuario: {
+   
+    id_usuario: {
       allowNull: true,
       type: DataTypes.INTEGER,
       references: {
