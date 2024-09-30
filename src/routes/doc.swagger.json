@@ -21,32 +21,21 @@
   "paths": {
     "/login": {
       "post": {
-        "tags": [
-          "Usuário"
-        ],
-        "description": "Endpoint para efetuar Log In",
+        "description": "",
         "parameters": [
           {
-            "name": "logIn",
+            "name": "body",
             "in": "body",
-            "description": "Usuário/email e senha",
-            "required": true,
             "schema": {
               "type": "object",
               "properties": {
                 "email": {
-                  "type": "string",
-                  "example": "exemplo@exemplo.com"
+                  "example": "any"
                 },
                 "senha": {
-                  "type": "string",
-                  "example": "123tgr76uy"
+                  "example": "any"
                 }
-              },
-              "required": [
-                "email",
-                "senha"
-              ]
+              }
             }
           }
         ],
@@ -67,6 +56,40 @@
       }
     },
     "/usuario/": {
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para listar todos os usuários",
+        "responses": {
+          "200": {
+            "description": "Usuários listados com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Lima Barreto"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lima@barreto.com"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "masculino"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "500": {
+            "description": "Erro ao listar usuários"
+          }
+        }
+      },
       "post": {
         "tags": [
           "Usuário"
@@ -97,10 +120,6 @@
                   "type": "string",
                   "example": "lima@barreto.com"
                 },
-                "endereco": {
-                  "type": "string",
-                  "example": "Avenida das Acácias, número: 666"
-                },
                 "senha": {
                   "type": "string",
                   "example": "1w89!jhdy1"
@@ -108,6 +127,34 @@
                 "dataNascimento": {
                   "type": "string",
                   "example": "1999-03-31"
+                },
+                "logradouro": {
+                  "type": "string",
+                  "example": "Avenida das Acácias"
+                },
+                "numero": {
+                  "type": "string",
+                  "example": "666"
+                },
+                "bairro": {
+                  "type": "string",
+                  "example": "Centro"
+                },
+                "cidade": {
+                  "type": "string",
+                  "example": "Rio de Janeiro"
+                },
+                "estado": {
+                  "type": "string",
+                  "example": "RJ"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "20040-002"
+                },
+                "complemento": {
+                  "type": "string",
+                  "example": "Apto 301"
                 }
               },
               "required": [
@@ -115,25 +162,244 @@
                 "sexo",
                 "cpf",
                 "email",
-                "endereco",
                 "senha",
-                "dataNascimento"
+                "dataNascimento",
+                "logradouro",
+                "numero",
+                "bairro",
+                "cidade",
+                "estado",
+                "cep"
               ]
             }
           }
         ],
         "responses": {
           "201": {
-            "description": "Created"
+            "description": "Usuário cadastrado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Lima Barreto"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lima@barreto.com"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "masculino"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Não foi possível cadastrar"
+          },
+          "500": {
+            "description": "Erro ao cadastrar o usuário"
+          }
+        }
+      }
+    },
+    "/usuario/{id}": {
+      "get": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para listar um usuário",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do usuário",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Usuário encontrado com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Lima Barreto"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lima@barreto.com"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "masculino"
+                },
+                "logradouro": {
+                  "type": "string",
+                  "example": "Avenida das Acácias"
+                },
+                "numero": {
+                  "type": "string",
+                  "example": "666"
+                },
+                "bairro": {
+                  "type": "string",
+                  "example": "Centro"
+                },
+                "cidade": {
+                  "type": "string",
+                  "example": "Rio de Janeiro"
+                },
+                "estado": {
+                  "type": "string",
+                  "example": "RJ"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "20040-002"
+                },
+                "complemento": {
+                  "type": "string",
+                  "example": "Apto 301"
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
           },
           "400": {
             "description": "Bad Request"
           },
-          "401": {
-            "description": "Unauthorized"
+          "404": {
+            "description": "Usuário não encontrado ou não possui permissão"
           },
           "500": {
-            "description": "Internal Server Error"
+            "description": "Erro ao exibir usuário"
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para atualizar um usuário",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do usuário",
+            "format": "int64"
+          },
+          {
+            "name": "atualizarUsuario",
+            "in": "body",
+            "description": "Atualização de dados",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "nome": {
+                  "type": "string",
+                  "example": "Lima Barreto"
+                },
+                "email": {
+                  "type": "string",
+                  "example": "lima@barreto.com"
+                },
+                "sexo": {
+                  "type": "string",
+                  "example": "masculino"
+                },
+                "cpf": {
+                  "type": "string",
+                  "example": "11122233344"
+                },
+                "dataNascimento": {
+                  "type": "string",
+                  "example": "1999-03-31"
+                },
+                "senha": {
+                  "type": "string",
+                  "example": "novaSenha123"
+                },
+                "logradouro": {
+                  "type": "string",
+                  "example": "Rua Nova"
+                },
+                "numero": {
+                  "type": "string",
+                  "example": "789"
+                },
+                "bairro": {
+                  "type": "string",
+                  "example": "Copacabana"
+                },
+                "cidade": {
+                  "type": "string",
+                  "example": "Rio de Janeiro"
+                },
+                "estado": {
+                  "type": "string",
+                  "example": "RJ"
+                },
+                "cep": {
+                  "type": "string",
+                  "example": "22030-001"
+                },
+                "complemento": {
+                  "type": "string",
+                  "example": "Casa"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Usuário atualizado com sucesso"
+          },
+          "404": {
+            "description": "Usuário não encontrado ou sem permissão"
+          },
+          "500": {
+            "description": "Erro ao atualizar o usuário"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Usuário"
+        ],
+        "description": "Endpoint para excluir um usuário",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "integer",
+            "description": "ID do usuário",
+            "format": "int64"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário excluído com sucesso"
+          },
+          "400": {
+            "description": "Não foi possível excluir o usuário ou não possui permissão"
+          },
+          "500": {
+            "description": "Erro ao excluir o usuário"
           }
         }
       }
@@ -264,6 +530,9 @@
           "400": {
             "description": "Bad Request"
           },
+          "404": {
+            "description": "Not Found"
+          },
           "500": {
             "description": "Internal Server Error"
           }
@@ -299,9 +568,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -339,9 +605,6 @@
           },
           "400": {
             "description": "Bad Request"
-          },
-          "401": {
-            "description": "Unauthorized"
           },
           "404": {
             "description": "Not Found"
@@ -418,9 +681,6 @@
           "400": {
             "description": "Bad Request"
           },
-          "401": {
-            "description": "Unauthorized"
-          },
           "404": {
             "description": "Not Found"
           },
@@ -470,6 +730,103 @@
             "description": "Internal Server Error"
           }
         }
+      }
+    },
+    "/dashboard/": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "description": "Endpoint para obter dados do Dashboard. Retorna o número total de usuários e locais.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do dashboard retornados com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usuarios": {
+                  "type": "number",
+                  "example": 100
+                },
+                "locais": {
+                  "type": "number",
+                  "example": 50
+                },
+                "locaisUsuario": {
+                  "type": "number",
+                  "example": 0
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "500": {
+            "description": "Erro ao obter dados do dashboard"
+          }
+        }
+      }
+    },
+    "/dashboard/logged": {
+      "get": {
+        "tags": [
+          "Dashboard"
+        ],
+        "description": "Endpoint para obter dados do Dashboard com base no usuário logado. Retorna o número total de usuários, locais, e o número de locais criados pelo usuário autenticado.",
+        "parameters": [
+          {
+            "name": "authorization",
+            "in": "header",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dados do dashboard para o usuário logado retornados com sucesso",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "usuarios": {
+                  "type": "number",
+                  "example": 100
+                },
+                "locais": {
+                  "type": "number",
+                  "example": 50
+                },
+                "locaisUsuario": {
+                  "type": "number",
+                  "example": 5
+                }
+              },
+              "xml": {
+                "name": "main"
+              }
+            }
+          },
+          "400": {
+            "description": "Usuário não autenticado ou nenhum local encontrado para o usuário"
+          },
+          "500": {
+            "description": "Erro ao obter dados do dashboard"
+          }
+        },
+        "security": [
+          {
+            "Bearer": []
+          }
+        ]
       }
     }
   },
