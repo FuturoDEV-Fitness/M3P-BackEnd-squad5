@@ -1,19 +1,19 @@
-const {Router} = require('express')
-const usuariosRoutes = require('./usuarios.routes')
-const LoginController = require('../controllers/LoginController')
-const locaisRoutes = require('./locais.routes')
-const auth = require('../middlewares/auth')
+const { Router } = require("express");
+const usuariosRoutes = require("./usuarios.routes");
+const LoginController = require("../controllers/LoginController");
+const locaisRoutes = require("./locais.routes");
+const auth = require("../middlewares/auth");
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerDocument = require('./doc.swagger.json')
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./doc.swagger.json");
 
-const routes = new Router()
+const routes = new Router();
 
-routes.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
+routes.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-routes.use('/usuario', usuariosRoutes)
-routes.post('/login', LoginController.acesso
-    /*
+routes.use("/usuario", usuariosRoutes);
+routes.post("/login", LoginController.acesso);
+/*
 #swagger.tags = ['Usuário'],
 #swagger.description = 'Endpoint para efetuar Log In',
 #swagger.parameters['logIn']= {
@@ -27,12 +27,10 @@ routes.post('/login', LoginController.acesso
     }
 
 },
+);
 */
-
-)
 // 'logIn'
 
-routes.use('/local', auth, locaisRoutes)
+routes.use("/local", auth, locaisRoutes);
 
-
-module.exports = routes
+module.exports = routes;
