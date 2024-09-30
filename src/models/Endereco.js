@@ -1,7 +1,14 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
+const Usuario = require("./Usuario");
 
 const Endereco = connection.define("enderecos", {
+  id: {
+    type: DataTypes.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+    allowNull: false,
+  },
   logradouro: {
     type: DataTypes.STRING(150),
     allowNull: false,
@@ -28,18 +35,22 @@ const Endereco = connection.define("enderecos", {
   },
   complemento: {
     type: DataTypes.STRING(150),
-    allowNull: false,
+    allowNull: true,
   },
   usuarioId: {
-    //allowNull: true,
     type: DataTypes.INTEGER,
     references: {
       model: "usuarios",
       key: "id",
     },
-    onDelete: 'CASCADE', // Deleta o endereço quando o usuário for deletado
-    onUpdate: 'CASCADE',
+    onDelete: "CASCADE",
+    onUpdate: "CASCADE",
   },
+});
+
+Endereco.belongsTo(Usuario, {
+  foreignKey: "usuarioId",
+  as: "usuario",
 });
 
 module.exports = Endereco;

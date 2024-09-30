@@ -1,11 +1,11 @@
-'use strict';
+"use strict";
 
-const { obterLocal } = require('../../services/geoFinder'); 
+const { obterLocal } = require("../../services/geoFinder");
 
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-  
+  async up(queryInterface, Sequelize) {
+    /*
       const locais = [
         {
           nomeLocal: 'Academia Central',
@@ -125,11 +125,11 @@ module.exports = {
         local.latitude = lat;
         local.longitude = lng;
       }
-
-      await queryInterface.bulkInsert('locais', locais, {});
+*/
+    await queryInterface.bulkInsert("locais", locais, {});
   },
 
-  async down (queryInterface, Sequelize) {
-      await queryInterface.bulkDelete('locais', null, {});
-  }
+  async down(queryInterface, Sequelize) {
+    await queryInterface.bulkDelete("locais", null, {});
+  },
 };

@@ -21,7 +21,6 @@ class LocalServices {
   }
 
   async cadastrarLocal(dados, idAutenticado) {
-
     if (!idAutenticado) {
       throw new Error("Ação não permitida: usuário não autenticado.");
     }
@@ -41,6 +40,7 @@ class LocalServices {
 
     return { localNovo, praticasCriadas };
   }
+
   async atualizarLocal(dados, local_id, idAutenticado) {
     const localEncontrado = await Local.findByPk(local_id);
 
@@ -50,7 +50,7 @@ class LocalServices {
 
     const { praticasPermitidas, ...dadosAtualizados } = dados;
 
-    //await local.update(dadosAtualizados); <-- assim emperra atualização de lat e long no Modelo
+    // Atualizando os dados do local
     localEncontrado.nomeLocal = dadosAtualizados.nomeLocal;
     localEncontrado.descricao = dadosAtualizados.descricao;
     localEncontrado.cep = dadosAtualizados.cep;
@@ -58,19 +58,32 @@ class LocalServices {
     localEncontrado.longitude = dadosAtualizados.longitude;
 
     await localEncontrado.save();
-    const localAtualizado = await Local.findByPk(local_id);
 
-    // if (praticasPermitidas && praticasPermitidas.length > 0)???
+    // Gerenciar as práticas (remover antigas e adicionar novas)
+    if (praticasPermitidas && praticasPermitidas.length > 0) {
+      // Remover práticas que não estão mais associadas ao local
+      await Praticas.destroy({
+        where: {
+          id_local: local_id,
+          nome: { [Op.notIn]: praticasPermitidas },
+        },
+      });
 
-    const praticasExistentes = await Praticas.finOne({
-        where:{
-            id_local: localAtualizado.id
-        }
-    })
-    //travei aqui
+      // Criar ou manter as práticas associadas ao local
+      for (const pratica of praticasPermitidas) {
+        await Praticas.findOrCreate({
+          where: { nome: pratica, id_local: local_id },
+        });
+      }
+    }
 
-    return localAtualizado;
+    const localAtualizado = await Local.findByPk(local_id, {
+      include: [{ model: Praticas, attributes: ["nome"] }],
+    });
+
+    return { localEncontrado, localAtualizado };
   }
+
   async deletarLocal(local_id, idAutenticado) {
     const localUsuario = await Local.findByPk(local_id);
 

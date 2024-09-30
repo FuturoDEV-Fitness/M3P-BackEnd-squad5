@@ -5,10 +5,9 @@ const Endereco = require("../models/Endereco");
 
 class UsuarioService {
   async listar() {
-    const usuarios = await usuarioModel.findAll({
+    return await Usuario.findAll({
       attributes: ["id", "nome", "email", "sexo", "createdAt", "updatedAt"],
     });
-    return usuarios;
   }
 
   async listarUm(id, idAutenticado) {
@@ -16,77 +15,12 @@ class UsuarioService {
       include: [{ model: Endereco, as: "enderecos" }],
     });
 
-    if (!usuarioBuscado) return null;
-    if (usuarioBuscado.id !== idAutenticado) return null;
+    if (!usuarioBuscado || usuarioBuscado.id !== idAutenticado) return null;
 
     return usuarioBuscado;
   }
+
   async criar(body) {
-    const {
-      body: nome,
-      email,
-      sexo,
-      cpf,
-      dataNascimento,
-      senha,
-      logradouro,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    } = body;
-
-    const corpo = { nome, email, sexo, cpf, dataNascimento, senha };
-    const enderecamento = {
-      logradouro,
-      numero,
-      bairro,
-      cidade,
-      estado,
-      cep,
-      complemento,
-    };
-
-    const usuarioExistente = await Usuario.findOne({
-      where: {
-        [Op.or]: [{ email: corpo.email }, { cpf: corpo.cpf }],
-      },
-    });
-    if (usuarioExistente) {
-      return null;
-    }
-    const usuarioCriado = await Usuario.create({
-      nome: corpo.nome,
-      email: corpo,
-      sexo: corpo.sexo,
-      cpf: corpo.cpf,
-      dataNascimento: corpo.dataNascimento,
-      senha: corpo.senha,
-    });
-
-    const { id: idUsuario } = usuarioCriado;
-
-    const enderecoCriado = await Endereco.create({
-      logradouro: enderecamento.logradouro,
-      numero: enderecamento.numero,
-      bairro: enderecamento.bairro,
-      cidade: enderecamento.cidade,
-      estado: enderecamento.estado,
-      cep: enderecamento.cep,
-      complemento: enderecamento.complemento,
-      usuario_id: idUsuario,
-    });
-
-    return { usuarioCriado, enderecoCriado };
-  }
-
-  async atualizar(id, body, idAutenticado) {
-    const usuarioEncontrado = await Usuario.findByPk(id);
-    if (!usuarioEncontrado) return null;
-    if (usuarioEncontrado.id !== idAutenticado) return null;
-
     const {
       nome,
       email,
@@ -94,11 +28,6 @@ class UsuarioService {
       cpf,
       dataNascimento,
       senha,
-      logradouro, numero, bairro, cidade, estado, cep, complemento
-    } = body;
-
-    const corpo = { nome, email, sexo, cpf, dataNascimento, senha };
-    const enderecamento = {
       logradouro,
       numero,
       bairro,
@@ -106,54 +35,65 @@ class UsuarioService {
       estado,
       cep,
       complemento,
-    };
+    } = body;
 
-    usuarioEncontrado.nome = corpo.nome;
-    usuarioEncontrado.email = corpo.email;
-    usuarioEncontrado.sexo = corpo.sexo;
-    usuarioEncontrado.senha = corpo.senha;
-
-    usuarioEncontrado.save();
-
-    const usuarioAtualizado = await Usuario.findByPk(id);
-    
-    const idAtualizado = usuarioAtualizado.id;
-    const enderecoEncontrado = await Endereco.findOne({
+    const usuarioExistente = await Usuario.findOne({
       where: {
-        usuario_id: idAtualizado,
+        [Op.or]: [{ email }, { cpf }],
       },
     });
+    if (usuarioExistente) return null;
 
-    (enderecoEncontrado.logradouro = enderecamento.logradouro),
-      (enderecoEncontrado.numero = enderecamento.numero),
-      (enderecoEncontrado.bairro = enderecamento.bairro),
-      (enderecoEncontrado.cidade = enderecamento.cidade),
-      (enderecoEncontrado.estado = enderecamento.estado),
-      (enderecoEncontrado.cep = enderecamento.cep),
-      (enderecoEncontrado.complemento = enderecamento.complemento),
-      (enderecoEncontrado.usuario_id = enderecamento.idAtualizado);
+    const usuarioCriado = await Usuario.create({
+      nome,
+      email,
+      sexo,
+      cpf,
+      dataNascimento,
+      senha,
+    });
+    await Endereco.create({
+      logradouro,
+      numero,
+      bairro,
+      cidade,
+      estado,
+      cep,
+      complemento,
+      usuario_id: usuarioCriado.id,
+    });
 
-    enderecoEncontrado.save();
-    return usuarioAtualizado;
+    return usuarioCriado;
+  }
+
+  async atualizar(id, body, idAutenticado) {
+    const usuarioEncontrado = await Usuario.findByPk(id);
+    if (!usuarioEncontrado || usuarioEncontrado.id !== idAutenticado)
+      return null;
+
+    Object.assign(usuarioEncontrado, body);
+    await usuarioEncontrado.save();
+
+    const enderecoEncontrado = await Endereco.findOne({
+      where: { usuario_id: id },
+    });
+    if (enderecoEncontrado) {
+      Object.assign(enderecoEncontrado, body);
+      await enderecoEncontrado.save();
+    }
+
+    return usuarioEncontrado;
   }
 
   async deletar(id, idAutenticado) {
-    const usuarioExistente = await Usuario.findByPk(id); 
-
+    const usuarioExistente = await Usuario.findByPk(id);
     if (!usuarioExistente) return false;
 
     const usuarioComLocal = await Usuario.findByPk(id, {
-      include: [
-        {
-          model: Local,
-          attributes: [],
-          where: { idUsuario: id },
-        },
-      ],
+      include: [{ model: Local, attributes: [], where: { idUsuario: id } }],
     });
 
-    if (usuarioComLocal) return null;
-    if (usuarioComLocal.id !== idAutenticado) return null;
+    if (usuarioComLocal || usuarioComLocal.id !== idAutenticado) return null;
 
     await usuarioExistente.destroy();
     return true;

@@ -1,66 +1,72 @@
-'use strict';
+"use strict";
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    const dados = [
+  async up(queryInterface, Sequelize) {
+    return queryInterface.bulkInsert("enderecos", [
       {
-        logradouro: "Rua dos Ignorantes",
-        numero: 119,
-        bairro: "Itacorubi",
-        cidade: "Florianópolis",
-        estado: "SC",
-        cep: "88034-354",
-        complemento: "Casa verde no alto da colina",
-        usuarioId: 1,
-      },
-      {
-        logradouro: "Avenida das Flores",
-        numero: 1000,
+        logradouro: "Rua das Flores",
+        numero: 123,
         bairro: "Centro",
-        cidade: "Florianópolis",
-        estado: "SC",
-        cep: "88015-000",
-        complemento: "Prédio comercial",
-        usuarioId: 2,
+        cidade: "São Paulo",
+        estado: "SP",
+        cep: "01001000",
+        complemento: "Apto 101",
+        usuarioId: 1,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        logradouro: "Rua do Sol",
-        numero: 45,
-        bairro: "Trindade",
-        cidade: "Florianópolis",
-        estado: "SC",
-        cep: "88025-001",
-        complemento: "Próximo à UFSC",
-        usuarioId: 3,
+        logradouro: "Avenida Brasil",
+        numero: 456,
+        bairro: "Jardim América",
+        cidade: "Rio de Janeiro",
+        estado: "RJ",
+        cep: "20040000",
+        complemento: "Casa",
+        usuarioId: 2,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
         logradouro: "Rua das Palmeiras",
-        numero: 27,
-        bairro: "Estreito",
-        cidade: "Florianópolis",
-        estado: "SC",
-        cep: "88080-120",
-        complemento: "Casa azul com garagem",
-        usuarioId: 4,
+        numero: 789,
+        bairro: "Copacabana",
+        cidade: "Rio de Janeiro",
+        estado: "RJ",
+        cep: "22041010",
+        complemento: "Cobertura 302",
+        usuarioId: 3,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
       {
-        logradouro: "Avenida Rio Branco",
-        numero: 500,
-        bairro: "Centro",
-        cidade: "Florianópolis",
-        estado: "SC",
-        cep: "88015-001",
-        complemento: "Perto do shopping",
-        usuarioId: 5,
+        logradouro: "Avenida Paulista",
+        numero: 1000,
+        bairro: "Bela Vista",
+        cidade: "São Paulo",
+        estado: "SP",
+        cep: "01310000",
+        complemento: "Sala 202",
+        usuarioId: 4,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
-    ]
-    await queryInterface.bulkInsert('enderecos', dados, {});
-    
+      {
+        logradouro: "Rua da Consolação",
+        numero: 876,
+        bairro: "Consolação",
+        cidade: "São Paulo",
+        estado: "SP",
+        cep: "01302000",
+        complemento: "Casa",
+        usuarioId: 5,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      },
+    ]);
   },
 
-  async down (queryInterface, Sequelize) {
-   await queryInterface.bulkDelete('enderecos', null, {});
-     
-  }
+  async down(queryInterface, Sequelize) {
+    return queryInterface.bulkDelete("enderecos", null, {});
+  },
 };
