@@ -2,9 +2,17 @@ const express = require("express");
 const routes = require("./routes/routes");
 const cors = require("cors");
 const connection = require('./database/connection')
+const app = express();
+const { swaggerUi, swaggerDocs } = require('./src/config/swaggerConfig');
+const dashboardRoutes = require('./src/routes/dashboard.routes');
 
 require('./models/Associations');
 
+// Middleware do Swagger
+app.use('/api/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+// Rotas da API
+app.use('/api/dashboard', dashboardRoutes);
 
 const APP_PORT = process.env.APP_PORT
 
