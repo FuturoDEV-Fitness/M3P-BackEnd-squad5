@@ -1,4 +1,7 @@
+const express = require('express');
 const { Router } = require('express')
+const localSchema = require('../validations/localValidation');
+const validationMiddleware = require('../middlewares/validationMiddleware');
 const LocalController = require('../controllers/LocalController')
 const MapController = require('../controllers/MapController')
 
@@ -122,5 +125,12 @@ locaisRoutes.get('/maps/:local_id', MapController.listarLinK
     */
 )
 //'obterLink'
+
+/**
+ * @route POST /api/local
+ * @description Cria um novo local
+ * @access Privado
+ */
+router.post('/local', validationMiddleware(localSchema), LocalController.createLocal);
 
 module.exports = locaisRoutes

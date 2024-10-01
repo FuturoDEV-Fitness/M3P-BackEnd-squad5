@@ -322,5 +322,33 @@ class LocalController {
     }
   }
 }
+class LocalController {
+  static async createLocal(req, res) {
+    try {
+      // Recebe os dados validados do corpo da requisição
+      const { name, address, city, state, zipCode } = req.body;
+
+      // Simula a criação do local (salvamento no banco de dados)
+      const newLocal = {
+        id: Date.now(), // ID fictício para simulação
+        name,
+        address,
+        city,
+        state,
+        zipCode,
+        createdAt: new Date(),
+      };
+
+      // Retorna uma resposta de sucesso com o local criado
+      res.status(201).json({
+        message: 'Local criado com sucesso!',
+        local: newLocal,
+      });
+    } catch (error) {
+      // Em caso de erro, responde com o status 500
+      res.status(500).json({ message: 'Erro ao criar o local', error });
+    }
+  }
+}
 
 module.exports = new LocalController();

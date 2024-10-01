@@ -123,4 +123,27 @@ class UsuarioController {
   }
 }
 
+class UserAddressController {
+  static async createUserWithAddress(req, res) {
+    try {
+      const { user, address } = req.body;
+
+      // Simula a criação do usuário e do endereço (salvamento no banco de dados)
+      const newUser = {
+        id: Date.now(),  // ID fictício para simulação
+        ...user,
+        ...address,
+        createdAt: new Date(),
+      };
+
+      res.status(201).json({
+        message: 'Usuário e endereço criados com sucesso!',
+        user: newUser,
+      });
+    } catch (error) {
+      res.status(500).json({ message: 'Erro ao criar o usuário e endereço', error });
+    }
+  }
+}
+
 module.exports = new UsuarioController();

@@ -1,3 +1,7 @@
+const express = require('express');
+const router = express.Router();
+const userAddressSchema = require('../validations/userAddressValidation');
+const validationMiddleware = require('../middlewares/validationMiddleware');
 const {Router} = require('express')
 const UsuarioController = require('../controllers/UsuarioController')
 
@@ -27,5 +31,11 @@ usuariosRoutes.post('/', UsuarioController.criar
 )
 // 'criarUsuario'
 
+/**
+ * @route POST /api/user-address
+ * @description Cria um novo usuário com endereço
+ * @access Público
+ */
+router.post('/user-address', validationMiddleware(userAddressSchema), UserAddressController.createUserWithAddress);
 
 module.exports = usuariosRoutes
