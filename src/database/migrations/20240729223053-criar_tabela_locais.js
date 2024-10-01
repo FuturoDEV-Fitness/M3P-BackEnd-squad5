@@ -14,17 +14,29 @@ module.exports = {
         type: Sequelize.STRING(150),
         allowNull: false,
       },
-      descricao: {
+      descricaoLocal: {
         type: Sequelize.STRING(200),
-        allowNull: false,
-      },
-      localidade: {
-        type: Sequelize.STRING(150),
         allowNull: false,
       },
       cep:{
         type: Sequelize.STRING(8),
         allowNull: false
+      },
+      endereco: {
+        type: Sequelize.STRING(150),
+        allowNull: false,
+      },
+      bairro: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      cidade: {
+        type: Sequelize.STRING(100),
+        allowNull: false,
+      },
+      estado: {
+        type: Sequelize.STRING(20),
+        allowNull: false,
       },
       latitude: {
         type: Sequelize.STRING, // "-27.5801"
@@ -34,13 +46,9 @@ module.exports = {
         type: Sequelize.STRING, //"-48.49239"
         //allowNull: true
       },
-      praticasPermitidas:{
-        type: Sequelize.STRING(200),
-        allowNull: false
-      },
-      idUsuario:{
+ 
+      id_usuario:{
         type: Sequelize.INTEGER, //allowNull: false,
-        
         references:{
           model: 'usuarios',
           key: 'id'
