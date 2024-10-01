@@ -46,6 +46,7 @@ module.exports = {
         type: Sequelize.STRING, //"-48.49239"
         //allowNull: true
       },
+ 
       id_usuario:{
         type: Sequelize.INTEGER, //allowNull: false,
         references:{
