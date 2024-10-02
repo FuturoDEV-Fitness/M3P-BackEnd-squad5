@@ -19,7 +19,10 @@ class LoginController {
           email: dados.email,
         },
       });
-      const senhaComparada = Encryption.compare(dados.senha, usuario.senha);
+      const senhaComparada = await Encryption.compare(
+        dados.senha,
+        usuario.senha
+      );
 
       if (!usuario || senhaComparada != true) {
         return response
