@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
 const { hashSync } = require("bcryptjs");
 const Local = require("./Local");
+const usuarioSchema = require("caminho/para/o/schema/usuarioSchema")
 
 
 const Usuario = connection.define(
@@ -43,6 +44,16 @@ const Usuario = connection.define(
     paranoid: true,
   }
 );
+
+// Supondo que os dados do usuário estejam em um objeto 'novoUsuario'(*realizar mudança nessa parte caso contrário)
+usuarioSchema.validate(novoUsuario, { abortEarly: false })
+  .then((valido) => {
+    // Dados válidos, prosseguir com a criação do usuário
+  })
+  .catch((erro) => {
+    // Exibir ou registrar os erros de validação
+    console.error(erro.errors);
+  });
 
 // Usuario.hasMany(Local...) --> Associations.js
 
