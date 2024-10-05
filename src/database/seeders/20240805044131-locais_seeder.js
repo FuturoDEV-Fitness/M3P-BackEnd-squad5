@@ -13,7 +13,7 @@ module.exports = {
         estado: "SP",
         latitude: "-23.55052",
         longitude: "-46.63331",
-        id_usuario: 1, // Deve corresponder a um usuário válido no seeder de usuários
+        id_usuario: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
@@ -28,7 +28,7 @@ module.exports = {
         estado: "RJ",
         latitude: "-22.90685",
         longitude: "-43.17290",
-        id_usuario: 2, // Deve corresponder a um usuário válido no seeder de usuários
+        id_usuario: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
@@ -44,7 +44,7 @@ module.exports = {
         estado: "RJ",
         latitude: "-22.97111",
         longitude: "-43.18223",
-        id_usuario: 3, // Deve corresponder a um usuário válido no seeder de usuários
+        id_usuario: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
@@ -59,7 +59,7 @@ module.exports = {
         estado: "SP",
         latitude: "-23.56168",
         longitude: "-46.65587",
-        id_usuario: 4, // Deve corresponder a um usuário válido no seeder de usuários
+        id_usuario: 4,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
@@ -74,7 +74,7 @@ module.exports = {
         estado: "SP",
         latitude: "-23.54777",
         longitude: "-46.64151",
-        id_usuario: 5, // Deve corresponder a um usuário válido no seeder de usuários
+        id_usuario: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,

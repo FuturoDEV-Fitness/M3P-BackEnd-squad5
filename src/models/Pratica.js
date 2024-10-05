@@ -12,13 +12,13 @@ const Pratica = connection.define(
       allowNull: false,
     },
     nome: {
-      type: DataTypes.ARRAY(DataTypes.STRING), 
+      type: DataTypes.ARRAY(DataTypes.STRING),
       allowNull: false,
     },
     id_local: {
       type: DataTypes.INTEGER,
       references: {
-        model: "locais", 
+        model: "locais",
         key: "id",
       },
       onUpdate: "CASCADE",
@@ -27,13 +27,8 @@ const Pratica = connection.define(
     },
   },
   {
-    paranoid: true, 
+    paranoid: true, // habilita soft deletes
   }
 );
-
-Pratica.belongsTo(Local, {
-  foreignKey: "id_local",
-  as: "local",
-});
 
 module.exports = Pratica;

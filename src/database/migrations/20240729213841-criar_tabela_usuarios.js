@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       sexo: {
-        type: Sequelize.ENUM("masculino", "feminino", "outro"),
+        type: Sequelize.ENUM("Masculino", "Feminino", "Outro"),
         allowNull: true,
       },
       cpf: {
