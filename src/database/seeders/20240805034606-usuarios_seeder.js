@@ -9,7 +9,7 @@ module.exports = {
     return queryInterface.bulkInsert("usuarios", [
       {
         nome: "João Silva",
-        sexo: "masculino",
+        sexo: "Masculino",
         cpf: "12525679901",
         email: "joao.silva@email.com",
         senha: senhaUsuarios,
@@ -20,7 +20,7 @@ module.exports = {
       },
       {
         nome: "Maria Souza",
-        sexo: "feminino",
+        sexo: "Feminino",
         cpf: "98765432100",
         email: "maria.souza@email.com",
         senha: senhaUsuarios,
@@ -31,7 +31,7 @@ module.exports = {
       },
       {
         nome: "Carlos Almeida",
-        sexo: "masculino",
+        sexo: "Masculino",
         cpf: "32165498712",
         email: "carlos.almeida@email.com",
         senha: senhaUsuarios,
@@ -42,7 +42,7 @@ module.exports = {
       },
       {
         nome: "Ana Paula",
-        sexo: "feminino",
+        sexo: "Feminino",
         cpf: "45678912300",
         email: "ana.paula@email.com",
         senha: senhaUsuarios,
@@ -53,7 +53,7 @@ module.exports = {
       },
       {
         nome: "Lucas Mendes",
-        sexo: "masculino",
+        sexo: "Masculino",
         cpf: "65498732145",
         email: "lucas.mendes@email.com",
         senha: senhaUsuarios,
