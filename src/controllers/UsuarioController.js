@@ -16,9 +16,12 @@ class UsuarioController {
   async listarUm(request, response) {
     try {
       const { id } = request.params;
-      const { idAutenticado } = request.usuarioId;
+      const { usuarioId } = request;
 
-      const usuarioBuscado = await UsuarioService.listarUm(id, idAutenticado);
+      console.log("ID do usuário buscado:", id);
+      console.log("ID do usuário autenticado:", usuarioId);
+
+      const usuarioBuscado = await UsuarioService.listarUm(id, usuarioId);
       if (!usuarioBuscado) {
         return response.status(400).json({
           success: false,
@@ -28,7 +31,9 @@ class UsuarioController {
       return response.status(200).json(usuarioBuscado);
     } catch (error) {
       console.error(error);
-      return response.status(500).json({ mensagem: "Erro ao exibir usuário" });
+      return response
+        .status(500)
+        .json({ mensagem: "Erro ao exibir usuário", error: error.message });
     }
   }
 
@@ -41,7 +46,7 @@ class UsuarioController {
         return response.status(400).json("Email ou CPF já cadastrados!");
       }
 
-      return response.status(201).json({ success: true, data: usuarioCriado });
+      return response.status(201).json();
     } catch (error) {
       console.error(error);
       return response
@@ -54,11 +59,11 @@ class UsuarioController {
     try {
       const { id } = request.params;
       const { body } = request;
-      const { idAutenticado } = request.usuarioId;
+      const { usuarioId } = request;
       const usuarioAtualizado = await UsuarioService.atualizar(
         id,
         body,
-        idAutenticado
+        usuarioId
       );
 
       if (!usuarioAtualizado) {
@@ -67,21 +72,21 @@ class UsuarioController {
         });
       }
 
-      return response.status(201).json(usuarioAtualizado);
+      return response.status(201).json();
     } catch (error) {
       console.error(error);
       return response
         .status(500)
-        .json({ mensagem: "Não foi possível atualizar o usuário" });
+        .json({ mensagem: "Não foi possível atualizar o usuário" + error });
     }
   }
 
   async deletar(request, response) {
     try {
       const { id } = request.params;
-      const { idAutenticado } = request.usuarioId;
+      const { usuarioId } = request;
 
-      const apagou = await UsuarioService.deletar(id, idAutenticado);
+      const apagou = await UsuarioService.deletar(id, usuarioId);
       if (!apagou) {
         return response
           .status(400)
@@ -92,7 +97,9 @@ class UsuarioController {
     } catch (error) {
       console.error(error);
 
-      return response.status(500).json({ mensagem: "Erro ao excluir usuário" });
+      return response
+        .status(500)
+        .json({ mensagem: "Erro ao excluir usuário" + error });
     }
   }
 }

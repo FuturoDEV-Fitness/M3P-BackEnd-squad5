@@ -1,12 +1,16 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-const Usuario = require("./Usuario");
-const { obterLocal, obterLink } = require('../services/geoFinder')
-
+const Usuario = require("./Usuario"); // Certifique-se que está sendo importado após ser exportado
 
 const Local = connection.define(
   "locais",
   {
+    id: {
+      type: DataTypes.INTEGER,
+      autoIncrement: true,
+      primaryKey: true,
+      allowNull: false,
+    },
     nomeLocal: {
       type: DataTypes.STRING(150),
       allowNull: false,
@@ -43,8 +47,12 @@ const Local = connection.define(
       type: DataTypes.STRING,
       allowNull: true,
     },
-    id_usuario: {
+
+    googleLink: {
+      type: DataTypes.STRING,
       allowNull: true,
+    },
+    id_usuario: {
       type: DataTypes.INTEGER,
       references: {
         model: "usuarios",
@@ -57,20 +65,6 @@ const Local = connection.define(
   }
 );
 
-// Local.belongsTo(Usuario...) --> Associations.js
+// A associação precisa estar definida depois da definição do modelo
 
-Local.beforeCreate(async (local) => {
-  const { lat, lng } = await obterLocal(local.cep)
-  local.latitude = lat;
-  local.longitude = lng;
-})
-
-Local.beforeUpdate(async (local) => {
-  console.log('beforeUpdate tá sendo chamado?');
-    const { lat, lng } = await obterLocal(local.cep);
-    console.log(`Lat: ${lat}, Lng: ${lng}`);
-    local.latitude = lat;
-    local.longitude = lng;
-  
-});
 module.exports = Local;

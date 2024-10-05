@@ -32,7 +32,7 @@ routes.post("/login", LoginController.acesso);
 */
 // 'logIn'
 
-routes.use("/local", auth, locaisRoutes);
+routes.use("/local", locaisRoutes);
 routes.use("/dashboard", dashboardRoutes);
 
 module.exports = routes;

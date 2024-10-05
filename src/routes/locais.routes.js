@@ -1,11 +1,13 @@
 const { Router } = require("express");
 const LocalController = require("../controllers/LocalController");
 const MapController = require("../controllers/MapController");
+const auth = require("../middlewares/auth");
 
 const locaisRoutes = new Router();
 
 locaisRoutes.post(
   "/",
+  auth,
   LocalController.cadastrarLocal
   /*
 #swagger.tags = ['Locais'],
@@ -49,7 +51,8 @@ locaisRoutes.get(
 );
 // 'listarTodos'
 locaisRoutes.get(
-  "/:local_id",
+  "/:id",
+  auth,
   LocalController.listarUmLocal
   /*
     #swagger.tags = ['Locais'],
@@ -68,6 +71,7 @@ locaisRoutes.get(
 // 'listarEspecífico
 locaisRoutes.delete(
   "/:local_id",
+  auth,
   LocalController.deletarLocal
   /*
     #swagger.tags = ['Locais'],
@@ -85,7 +89,8 @@ locaisRoutes.delete(
 );
 //'deletarEspecífico'
 locaisRoutes.put(
-  "/:local_id",
+  "/:id",
+  auth,
   LocalController.atualizarLocal
   /*
     #swagger.tags = ['Locais']
@@ -116,6 +121,7 @@ locaisRoutes.put(
 
 locaisRoutes.get(
   "/maps/:local_id",
+  auth,
   MapController.listarLinK
 
   /*

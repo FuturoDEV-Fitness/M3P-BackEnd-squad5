@@ -4,7 +4,6 @@ const Encryption = require("../../utils/Encryption");
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    // Encripta as senhas usando a classe Encryption
     const senhaUsuarios = await Encryption.encrypt("12345678910");
 
     return queryInterface.bulkInsert("usuarios", [

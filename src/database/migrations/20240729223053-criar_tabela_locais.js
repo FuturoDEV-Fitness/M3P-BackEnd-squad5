@@ -18,9 +18,9 @@ module.exports = {
         type: Sequelize.STRING(200),
         allowNull: false,
       },
-      cep:{
+      cep: {
         type: Sequelize.STRING(8),
-        allowNull: false
+        allowNull: false,
       },
       endereco: {
         type: Sequelize.STRING(150),
@@ -46,14 +46,17 @@ module.exports = {
         type: Sequelize.STRING, //"-48.49239"
         //allowNull: true
       },
- 
-      id_usuario:{
-        type: Sequelize.INTEGER, //allowNull: false,
-        references:{
-          model: 'usuarios',
-          key: 'id'
-        },
+      googleLink: {
+        type: Sequelize.STRING,
+        //allowNull: true
+      },
 
+      id_usuario: {
+        type: Sequelize.INTEGER, //allowNull: false,
+        references: {
+          model: "usuarios",
+          key: "id",
+        },
       },
       createdAt: { allowNull: false, type: Sequelize.DATE },
       updatedAt: { allowNull: false, type: Sequelize.DATE },
