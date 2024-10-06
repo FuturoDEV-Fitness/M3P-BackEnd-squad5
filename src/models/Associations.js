@@ -15,7 +15,7 @@ Local.belongsTo(Usuario, {
 
 Endereco.belongsTo(Usuario, {
   foreignKey: "id_usuario",
-  as: "usuario",
+  as: "endereco_usuario",
 });
 
 Usuario.hasOne(Endereco, {
@@ -32,11 +32,6 @@ Pratica.belongsTo(Local, {
   as: "local",
 });
 
-
-Endereco.belongsTo(Usuario, {
-  foreignKey: "usuarioId",
-  as: "usuario",
-});
 
 module.exports = {
   Usuario,
