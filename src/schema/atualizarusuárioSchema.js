@@ -10,7 +10,7 @@ const updateUserSchema = Yup.object().shape({
   numero: Yup.number().typeError('Número deve ser numérico').optional(),
   bairro: Yup.string().optional(),
   cidade: Yup.string().optional(),
-  estado: Yup.string().matches(/^[A-Z]$/, 'Estado deve ter o nome completo').optional(),
+  estado: Yup.string().matches(/^[a-z]$/.toUpperCase(), 'Estado deve ter o nome completo').optional(),
   cep: Yup.string().matches(/^\d{8}$/, 'CEP deve ter 8 dígitos').optional(),
   complemento: Yup.string().optional(),
 });

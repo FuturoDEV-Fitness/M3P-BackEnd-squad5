@@ -19,7 +19,7 @@ const createUserSchema = Yup.object().shape({
   bairro: Yup.string().required('Bairro é obrigatório'),
   cidade: Yup.string().required('Cidade é obrigatória'),
   estado: Yup.string()
-    .matches(/^[A-Z]$/, 'Estado deve ter o nome completo')
+    .matches(/^[A-Z]$/.toUpperCase(), 'Estado deve ter o nome completo')
     .required('Estado é obrigatório'),
   cep: Yup.string()
     .matches(/^\d{8}$/, 'CEP deve ter 8 dígitos')
