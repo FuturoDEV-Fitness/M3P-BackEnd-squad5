@@ -1,6 +1,8 @@
 const { Router } = require("express");
 const UsuarioController = require("../controllers/UsuarioController");
 const auth = require("../middlewares/auth");
+const validateCreateUser = require("../middlewares/yup/createUserValidate");
+const validateUpdateUser = require("../middlewares/yup/updateUserValidate");
 
 const usuariosRoutes = new Router();
 
@@ -65,6 +67,7 @@ usuariosRoutes.get(
 usuariosRoutes.put(
   "/:id",
   auth,
+  validateUpdateUser,
   UsuarioController.atualizar
   /*
   #swagger.tags = ['Usuário']
@@ -136,6 +139,7 @@ usuariosRoutes.delete(
 
 usuariosRoutes.post(
   "/",
+  validateCreateUser,
   UsuarioController.criar
   /*
   #swagger.tags = ['Usuário']

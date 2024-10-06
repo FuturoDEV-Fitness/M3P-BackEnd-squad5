@@ -22,9 +22,6 @@ class LocalController {
   async listarLocais(request, response) {
     try {
       const locaisGeral = await LocalServices.listarLocais();
-      console.log("Batata");
-      console.log(locaisGeral);
-
       if (!locaisGeral.length) {
         return response
           .status(404)

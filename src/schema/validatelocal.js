@@ -1,12 +1,15 @@
-import { localSchema } from './src/schema/localSchema';
+const localSchema = require("./localschema");
 
-// Função para validar o payload de atualização
-export const validateUpdate = async (data) => {
+const validateLocalSchema = async (data) => {
   try {
-    // Utilizando o schema com a validação parcial (atualização)
-    await localSchema.validate(data, { abortEarly: false, context: { partial: true } });
+    await localSchema.validate(data, {
+      abortEarly: false,
+      context: { partial: true },
+    });
     return { valid: true, errors: null };
   } catch (err) {
     return { valid: false, errors: err.errors };
   }
 };
+
+module.exports = validateLocalSchema;
