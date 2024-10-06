@@ -48,9 +48,4 @@ const Endereco = connection.define("enderecos", {
   },
 });
 
-Endereco.belongsTo(Usuario, {
-  foreignKey: "usuarioId",
-  as: "usuario",
-});
-
 module.exports = Endereco;

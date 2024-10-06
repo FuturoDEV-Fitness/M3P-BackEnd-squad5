@@ -1,91 +1,88 @@
 "use strict";
 
-const { obterLocal } = require("../../services/geoFinder");
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    
-     
-  
-      // // Atualizar latitude e longitude para cada local
-      // for (let local of locais) {
-      //   const { lat, lng } = await obterLocal(local.cep);
-      //   local.latitude = lat;
-      //   local.longitude = lng;
-      // }
-
-    //await 
     return queryInterface.bulkInsert("locais", [
       {
-        nomeLocal: 'Academia Central',
-        descricaoLocal: 'Academia com diversos equipamentos para musculação e aeróbica.',
-        cep: '20271190',
-        endereco: 'Rua das Palmeiras, nº 100',
-        bairro: 'Centro',
-        cidade: 'Rio de Janeiro',
-        estado: 'RJ',
+        nomeLocal: "Academia São Paulo",
+        descricaoLocal: "Academia equipada com diversos aparelhos",
+        cep: "01001000",
+        endereco: "Rua das Flores, 123",
+        bairro: "Centro",
+        cidade: "São Paulo",
+        estado: "SP",
+        latitude: "-23.55052",
+        longitude: "-46.63331",
+        id_usuario: 1,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        id_usuario: 1 
       },
       {
-        nomeLocal: 'Parque das Aves',
-        descricaoLocal: 'Parque ao ar livre ideal para caminhadas e esportes ao ar livre.',
-        cep: '30672250',
-        endereco: 'Avenida das Aves, nº 250',
-        bairro: 'Aves',
-        cidade: 'Belo Horizonte',
-        estado: 'MG',
+        nomeLocal: "Centro Esportivo Rio",
+        descricaoLocal: "Centro com quadras de futebol e basquete",
+        cep: "20040000",
+        endereco: "Avenida Brasil, 456",
+        bairro: "Jardim América",
+        cidade: "Rio de Janeiro",
+        estado: "RJ",
+        latitude: "-22.90685",
+        longitude: "-43.17290",
+        id_usuario: 2,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        id_usuario: 2 
       },
       {
-        nomeLocal: 'Centro de Treinamento Fitness',
-        descricaoLocal: 'Centro de treinamento especializado em esportes de alta performance.',
-        cep: '05653070',
-        endereco: 'Praça da Vitória, nº 15',
-        bairro: 'Vitória',
-        cidade: 'São Paulo',
-        estado: 'SP',
+        nomeLocal: "Parque Copacabana",
+        descricaoLocal:
+          "Parque com espaço para caminhadas e atividades ao ar livre",
+        cep: "22041010",
+        endereco: "Rua das Palmeiras, 789",
+        bairro: "Copacabana",
+        cidade: "Rio de Janeiro",
+        estado: "RJ",
+        latitude: "-22.97111",
+        longitude: "-43.18223",
+        id_usuario: 3,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        id_usuario: 3 
       },
       {
-        nomeLocal: 'Clube de Corrida',
-        descricaoLocal: 'Clube dedicado a corridas e eventos de atletismo.',
-        cep: '40050565',
-        endereco: 'Rua das Flores, nº 55',
-        bairro: 'Flora',
-        cidade: 'Salvador',
-        estado: 'BA',
+        nomeLocal: "Clínica Esportiva Paulista",
+        descricaoLocal: "Clínica especializada em fisioterapia esportiva",
+        cep: "01310000",
+        endereco: "Avenida Paulista, 1000",
+        bairro: "Bela Vista",
+        cidade: "São Paulo",
+        estado: "SP",
+        latitude: "-23.56168",
+        longitude: "-46.65587",
+        id_usuario: 4,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        id_usuario: 4 
       },
       {
-        nomeLocal: 'Estúdio de Yoga Zen',
-        descricaoLocal: 'Estúdio de yoga com aulas para todas as idades e níveis.',
-        cep: '90810240',
-        endereco: 'Rua da Paz, nº 77',
-        bairro: 'Paz',
-        cidade: 'Porto Alegre',
-        estado: 'RS',
+        nomeLocal: "Centro de Treinamento Consolação",
+        descricaoLocal: "Centro de treinamento funcional",
+        cep: "01302000",
+        endereco: "Rua da Consolação, 876",
+        bairro: "Consolação",
+        cidade: "São Paulo",
+        estado: "SP",
+        latitude: "-23.54777",
+        longitude: "-46.64151",
+        id_usuario: 5,
         createdAt: new Date(),
         updatedAt: new Date(),
         deletedAt: null,
-        id_usuario: 5 
       },
     ]);
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.bulkDelete("locais", null, {});
+    return queryInterface.bulkDelete("locais", null, {});
   },
 };

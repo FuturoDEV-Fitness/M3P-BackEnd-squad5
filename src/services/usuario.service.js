@@ -9,13 +9,14 @@ class UsuarioService {
       attributes: ["id", "nome", "email", "sexo", "createdAt", "updatedAt"],
     });
   }
-
   async listarUm(id, idAutenticado) {
     const usuarioBuscado = await Usuario.findByPk(id, {
       include: [{ model: Endereco, as: "enderecos" }],
     });
 
-    if (!usuarioBuscado || usuarioBuscado.id !== idAutenticado) return null;
+    if (!usuarioBuscado) return null;
+
+    if (usuarioBuscado.id !== idAutenticado) return null;
 
     return usuarioBuscado;
   }
@@ -75,7 +76,7 @@ class UsuarioService {
     await usuarioEncontrado.save();
 
     const enderecoEncontrado = await Endereco.findOne({
-      where: { usuario_id: id },
+      where: { usuarioId: id },
     });
     if (enderecoEncontrado) {
       Object.assign(enderecoEncontrado, body);
@@ -84,16 +85,22 @@ class UsuarioService {
 
     return usuarioEncontrado;
   }
-
   async deletar(id, idAutenticado) {
     const usuarioExistente = await Usuario.findByPk(id);
     if (!usuarioExistente) return false;
 
     const usuarioComLocal = await Usuario.findByPk(id, {
-      include: [{ model: Local, attributes: [], where: { idUsuario: id } }],
+      include: [
+        {
+          model: Local,
+          as: "locais",
+          attributes: [],
+          where: { id_usuario: id },
+        },
+      ],
     });
 
-    if (usuarioComLocal || usuarioComLocal.id !== idAutenticado) return null;
+    if (usuarioComLocal && usuarioComLocal.id !== idAutenticado) return null;
 
     await usuarioExistente.destroy();
     return true;

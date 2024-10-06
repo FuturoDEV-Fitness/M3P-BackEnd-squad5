@@ -1,7 +1,6 @@
 const { DataTypes } = require("sequelize");
 const connection = require("../database/connection");
-const { hashSync } = require("bcryptjs");
-const Local = require("./Local");
+const Encryption = require("../utils/Encryption");
 
 const Usuario = connection.define(
   "usuarios",
@@ -17,7 +16,7 @@ const Usuario = connection.define(
       allowNull: false,
     },
     sexo: {
-      type: DataTypes.ENUM("masculino", "feminino", "outro"),
+      type: DataTypes.ENUM("Masculino", "Feminino", "Outro"),
       allowNull: true,
     },
     cpf: {
@@ -41,19 +40,19 @@ const Usuario = connection.define(
   },
   {
     paranoid: true,
+    hooks: {
+      beforeCreate: async (usuario) => {
+        if (usuario.senha) {
+          usuario.senha = await Encryption.encrypt(usuario.senha);
+        }
+      },
+      beforeUpdate: async (usuario) => {
+        if (usuario.senha) {
+          usuario.senha = await Encryption.encrypt(usuario.senha);
+        }
+      },
+    },
   }
 );
-
-Usuario.beforeSave((usuario) => {
-  if (usuario.senha) {
-    usuario.senha = hashSync(usuario.senha, 10);
-  }
-  return usuario;
-});
-
-Usuario.hasMany(Local, {
-  foreignKey: "usuarioId",
-  as: "locais",
-});
 
 module.exports = Usuario;

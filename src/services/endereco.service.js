@@ -6,7 +6,6 @@ class EnderecoService {
     return listaEnderecos;
   }
   async listarUm(idUsuarioEnd, idAutenticado) {
-    //usuarioId na tabela endereços
     const enderecoBuscado = await Endereco.findOne({
       where: { usuarioId: idUsuarioEnd },
     });
@@ -26,7 +25,6 @@ class EnderecoService {
     complemento,
     usuarioId
   ) {
-    //<---
     const EnderecoExistente = await Endereco.findOne({
       where: { numero: numero, cep: cep },
     });
@@ -40,7 +38,7 @@ class EnderecoService {
       estado: estado,
       cep: cep,
       complemento: complemento,
-      usuarioId: usuarioId, /// <---
+      usuarioId: usuarioId,
     });
     return enderecoCriado;
   }
@@ -68,7 +66,7 @@ class EnderecoService {
         usuarioId: id,
       },
     });
-    return enderecoAtualizado
+    return enderecoAtualizado;
   }
   async deletar(id, idAutenticado) {
     const idDoUsuario = id;

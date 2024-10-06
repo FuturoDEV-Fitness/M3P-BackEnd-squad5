@@ -1,5 +1,6 @@
-const { Router } = require('express');
-const UsuarioController = require('../controllers/UsuarioController');
+const { Router } = require("express");
+const UsuarioController = require("../controllers/UsuarioController");
+const auth = require("../middlewares/auth");
 
 const usuariosRoutes = new Router();
 
@@ -25,6 +26,7 @@ usuariosRoutes.get(
 
 usuariosRoutes.get(
   "/:id",
+  auth,
   UsuarioController.listarUm
   /*
   #swagger.tags = ['Usuário']
@@ -62,6 +64,7 @@ usuariosRoutes.get(
 
 usuariosRoutes.put(
   "/:id",
+  auth,
   UsuarioController.atualizar
   /*
   #swagger.tags = ['Usuário']
@@ -107,6 +110,7 @@ usuariosRoutes.put(
 
 usuariosRoutes.delete(
   "/:id",
+  auth,
   UsuarioController.deletar
   /*
   #swagger.tags = ['Usuário']
@@ -131,7 +135,7 @@ usuariosRoutes.delete(
 );
 
 usuariosRoutes.post(
-  '/',
+  "/",
   UsuarioController.criar
   /*
   #swagger.tags = ['Usuário']
