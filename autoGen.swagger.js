@@ -2,7 +2,7 @@ const swaggerAutogen = require('swagger-autogen')()
 
 const doc = {
     info:{
-        title: 'API Exercita 365',
+        title: 'GJM Exercises',
         description: 'API de locais fitness',
         version: '1.0.0'
     },
