@@ -14,12 +14,12 @@ Local.belongsTo(Usuario, {
 });
 
 Endereco.belongsTo(Usuario, {
-  foreignKey: "id_usuario",
+  foreignKey: "idUsuario",
   as: "endereco_usuario",
 });
 
 Usuario.hasOne(Endereco, {
-  foreignKey: 'id_usuario'
+  foreignKey: 'idUsuario'
    
 });
 
