@@ -2,12 +2,14 @@ const { Router } = require("express");
 const LocalController = require("../controllers/LocalController");
 const MapController = require("../controllers/MapController");
 const auth = require("../middlewares/auth");
+const validateLocalSchema = require("../schema/validatelocal");
 
 const locaisRoutes = new Router();
 
 locaisRoutes.post(
   "/",
   auth,
+  validateLocalSchema,
   LocalController.cadastrarLocal
   /*
 #swagger.tags = ['Locais'],
@@ -91,6 +93,7 @@ locaisRoutes.delete(
 locaisRoutes.put(
   "/:id",
   auth,
+  validateLocalSchema,
   LocalController.atualizarLocal
   /*
     #swagger.tags = ['Locais']

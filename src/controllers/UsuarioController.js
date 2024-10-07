@@ -104,4 +104,27 @@ class UsuarioController {
   }
 }
 
+// Exemplo de uso para validação de um usuário novo
+async function createUser(data) {
+  try {
+    await createUserSchema.validate(data);
+    // Se a validação passar, prosseguir com a lógica de cadastro...
+  } catch (error) {
+    console.error('Erro de validação:', error.errors);
+    // Tratar erro de validação (por exemplo, retornar erro 400 com a mensagem do Yup)
+  }
+}
+
+// Exemplo de uso para validação de atualização de usuário
+async function updateUser(data) {
+  try {
+    await updateUserSchema.validate(data);
+    // Se a validação passar, prosseguir com a lógica de atualização...
+  } catch (error) {
+    console.error('Erro de validação:', error.errors);
+    // Tratar erro de validação (por exemplo, retornar erro 400 com a mensagem do Yup)
+  }
+}
+
+
 module.exports = new UsuarioController();
