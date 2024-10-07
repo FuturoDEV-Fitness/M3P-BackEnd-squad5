@@ -47,19 +47,33 @@ npm install nodemon --save-dev
 #### 📚 Bibliotecas utilizadas:
 
 axios ![axios](https://img.shields.io/badge/npm-1.7.2-blue)
+
 bcrypt ![bcrypt](https://img.shields.io/badge/npm-5.1.1-blue)
+
 bcryptjs ![bcryptjs](https://img.shields.io/badge/npm-2.4.3-blue)
+
 cors ![cors](https://img.shields.io/badge/npm-2.8.5-blue)
+
 dotenv ![dotenv](https://img.shields.io/badge/npm-16.4.5-blue)
+
 express ![express](https://img.shields.io/badge/npm-4.19.2-blue)
+
 jsonwebtoken ![jsonwebtoken](https://img.shields.io/badge/npm-9.0.2-blue)
+
 pg ![pg](https://img.shields.io/badge/npm-8.12.0-blue)
+
 sequelize ![sequelize](https://img.shields.io/badge/npm-6.37.3-blue)
+
 sequelize-cli ![sequelize-cli](https://img.shields.io/badge/npm-6.6.2-blue)
+
 sqlite3 ![sqlite3](https://img.shields.io/badge/npm-5.1.7-blue)
+
 swagger-autogen ![swagger-autogen](https://img.shields.io/badge/npm-2.23.7-blue)
+
 swagger-ui-express ![swagger-ui-express](https://img.shields.io/badge/npm-5.0.1-blue)
+
 yup ![yup](https://img.shields.io/badge/npm-1.4.0-blue)
+
 nodemon ![nodemon](https://img.shields.io/badge/npm-3.1.4-blue)
 
 
