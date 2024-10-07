@@ -61,7 +61,7 @@ class UsuarioService {
       estado,
       cep,
       complemento,
-      usuario_id: usuarioCriado.id,
+      usuarioId: usuarioCriado.id,
     });
 
     return usuarioCriado;

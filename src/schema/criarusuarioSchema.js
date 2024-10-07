@@ -28,7 +28,8 @@ const createUserSchema = yup.object().shape({
   cidade: yup.string().required("Cidade é obrigatória"),
   estado: yup
     .string()
-    .matches(/^[A-Z]{2}$/, "Estado deve ser uma sigla de dois caracteres")
+    .matches(/^[A-Za-z\s]+$/, "Estado deve conter apenas letras")
+    .max(150, "Estado pode ter no máximo 150 caracteres")
     .required("Estado é obrigatório"),
   cep: yup
     .string()
