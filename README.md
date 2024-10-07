@@ -74,9 +74,6 @@ Node.js e IDE (Visual Studio Code)
  ```
 npm install nodemon --save-dev
 ```
-###### Proceder a série de instalações abaixo garantirá pleno funcionamento do projeto:
-
-
 
 ## ⚙️ Executando 
 
@@ -107,7 +104,6 @@ EndPoinst: acesso e funcionalidades de usuário elocais:
 EndPoinst: obtenção de link do maps e dashborad:
 ![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsbase.jpg)
 
-## 🛠️ Melhorias aplicáveis:
 
 
 
