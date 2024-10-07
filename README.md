@@ -88,7 +88,10 @@ npm install nodemon --save-dev
 1º `npm run swagger`
 2º `npm run start:dev`
 
-###### Rodar uma migrations:
+###### Criar o banco de dados:
+`sequelize db:create`
+
+###### Rodar as migrations:
 `sequelize db:migrate`
 
 ###### Executar os seeders:
@@ -98,7 +101,10 @@ npm install nodemon --save-dev
 `https://http://localhost:3000/docs/`
 
 #### Endpoints criados e demonstração no Swagger:
+EndPoinst: acesso e funcionalidades de usuário elocais:
 ![EndPoinst: acesso e funcionalidades de usuário elocais:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsTop.jpg)
+
+EndPoinst: obtenção de link do maps e dashborad:
 ![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsbase.jpg)
 
 ## 🛠️ Melhorias aplicáveis:
