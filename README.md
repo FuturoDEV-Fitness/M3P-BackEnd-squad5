@@ -11,38 +11,7 @@ Aqui encontra-se o repositório constituidor do backend da aplicação global.
 * [Sequelize](https://sequelize.org/) - ORM (mapeador objeto-relacional) para Node e SQL
 * [PostgreSQL](https://www.postgresql.org/) - Sistema gerenciador de banco de dados objeto relacional
 * [Swagger](https://swagger.io/) - Ferramenta de documentação e design de APIs web 
-
-
-### 📌 Versionamento
-Utilizou-se:
-[GitFlow](https://docs.github.com/pt/get-started/using-github/github-flow) para controle de versão. Para as versões disponíveis, observe as tags presentes neste [repositório](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/branches). 
-
-
-###### O modelo relacional que orientou a execução do projeto:
-![Modelo relacional](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/sql_projeto.jpg)
-
-## 🚀 Começando
-
-
-#### 📋 Pré-requisitos
-
-
-Node.js e IDE (Visual Studio Code)
-
-#### 💾 Obter o repositório utilizando:
-
-```
-    git pull https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5
-```
-
-###### Na primeira vez é necessário instalar as dependências:
-```
- npm install ou npm init -y
- ```   
- ```
-npm install nodemon --save-dev
-```
-###### Proceder a série de instalações abaixo garantirá pleno funcionamento do projeto:
+* [DrawSql](https://drawsql.app) - Ferramenta para traçar modelos relacionais
 
 #### 📚 Bibliotecas utilizadas:
 
@@ -75,6 +44,38 @@ swagger-ui-express ![swagger-ui-express](https://img.shields.io/badge/npm-5.0.1-
 yup ![yup](https://img.shields.io/badge/npm-1.4.0-blue)
 
 nodemon ![nodemon](https://img.shields.io/badge/npm-3.1.4-blue)
+
+### 📌 Versionamento
+Utilizou-se:
+[GitFlow](https://docs.github.com/pt/get-started/using-github/github-flow) para controle de versão. Para as versões disponíveis, observe as tags presentes neste [repositório](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/branches). 
+
+
+###### O modelo relacional que orientou a execução do projeto:
+![Modelo relacional](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/modeRelacional.jpg)
+
+## 🚀 Começando
+
+
+#### 📋 Pré-requisitos
+
+
+Node.js e IDE (Visual Studio Code)
+
+#### 💾 Obter o repositório utilizando:
+
+```
+    git pull https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5
+```
+
+###### Na primeira vez é necessário instalar as dependências:
+```
+ npm install ou npm init -y
+ ```   
+ ```
+npm install nodemon --save-dev
+```
+###### Proceder a série de instalações abaixo garantirá pleno funcionamento do projeto:
+
 
 
 ## ⚙️ Executando 
