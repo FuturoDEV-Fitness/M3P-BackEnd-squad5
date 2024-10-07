@@ -51,7 +51,7 @@ Utilizou-se:
 
 
 ###### O modelo relacional que orientou a execução do projeto:
-![Modelo relacional](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/modeRelacional.jpg)
+![Modelo relacional](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/modeRelacional.jpg)
 
 ## 🚀 Começando
 
@@ -98,8 +98,8 @@ npm install nodemon --save-dev
 `https://http://localhost:3000/docs/`
 
 #### Endpoints criados e demonstração no Swagger:
-![EndPoinst: acesso e funcionalidades de usuário elocais:](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/endPoinstTop.jpg)
-![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/endPoinstBase.jpg)
+![EndPoinst: acesso e funcionalidades de usuário elocais:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsTop.jpg)
+![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsbase.jpg)
 
 ## 🛠️ Melhorias aplicáveis:
 
