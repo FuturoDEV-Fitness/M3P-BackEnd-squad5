@@ -1,6 +1,7 @@
-# Exercita 365
+# GJM Exercises
 
 Plataforma que facilita a prática de exercícios com a localização de espaços para atividades físicas. Na plataforma os usuários registrados podem cadastrar novos locais de exercícios, descobrir áreas em uma lista disponível, obter sua geolocalização, e obter informações sobre os atividades físicas possibilitadas.
+Aqui encontra-se o repositório constituidor do backend da aplicação global.
 
 ### 👨‍💻 Tecnologias 
 
@@ -9,15 +10,48 @@ Plataforma que facilita a prática de exercícios com a localização de espaço
 * [Express](https://expressjs.com/pt-br/) - Framework usado para a API WEB
 * [Sequelize](https://sequelize.org/) - ORM (mapeador objeto-relacional) para Node e SQL
 * [PostgreSQL](https://www.postgresql.org/) - Sistema gerenciador de banco de dados objeto relacional
+* [Swagger](https://swagger.io/) - Ferramenta de documentação e design de APIs web 
+* [DrawSql](https://drawsql.app) - Ferramenta para traçar modelos relacionais
 
+#### 📚 Bibliotecas utilizadas:
+
+axios ![axios](https://img.shields.io/badge/npm-1.7.2-blue)
+
+bcrypt ![bcrypt](https://img.shields.io/badge/npm-5.1.1-blue)
+
+bcryptjs ![bcryptjs](https://img.shields.io/badge/npm-2.4.3-blue)
+
+cors ![cors](https://img.shields.io/badge/npm-2.8.5-blue)
+
+dotenv ![dotenv](https://img.shields.io/badge/npm-16.4.5-blue)
+
+express ![express](https://img.shields.io/badge/npm-4.19.2-blue)
+
+jsonwebtoken ![jsonwebtoken](https://img.shields.io/badge/npm-9.0.2-blue)
+
+pg ![pg](https://img.shields.io/badge/npm-8.12.0-blue)
+
+sequelize ![sequelize](https://img.shields.io/badge/npm-6.37.3-blue)
+
+sequelize-cli ![sequelize-cli](https://img.shields.io/badge/npm-6.6.2-blue)
+
+sqlite3 ![sqlite3](https://img.shields.io/badge/npm-5.1.7-blue)
+
+swagger-autogen ![swagger-autogen](https://img.shields.io/badge/npm-2.23.7-blue)
+
+swagger-ui-express ![swagger-ui-express](https://img.shields.io/badge/npm-5.0.1-blue)
+
+yup ![yup](https://img.shields.io/badge/npm-1.4.0-blue)
+
+nodemon ![nodemon](https://img.shields.io/badge/npm-3.1.4-blue)
 
 ### 📌 Versionamento
 Utilizou-se:
-[GitFlow](https://docs.github.com/pt/get-started/using-github/github-flow) para controle de versão. Para as versões disponíveis, observe as [tags neste repositório](https://github.com/marcelovntr/Projeto-Modulo-II/branches). 
+[GitFlow](https://docs.github.com/pt/get-started/using-github/github-flow) para controle de versão. Para as versões disponíveis, observe as tags presentes neste [repositório](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/branches). 
 
 
 ###### O modelo relacional que orientou a execução do projeto:
-![Modelo relacional](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/sql_projeto.jpg)
+![Modelo relacional](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/modeRelacional.jpg)
 
 ## 🚀 Começando
 
@@ -30,7 +64,7 @@ Node.js e IDE (Visual Studio Code)
 #### 💾 Obter o repositório utilizando:
 
 ```
-    git pull https://github.com/marcelovntr/Projeto-Modulo-II
+    git pull https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5
 ```
 
 ###### Na primeira vez é necessário instalar as dependências:
@@ -40,50 +74,6 @@ Node.js e IDE (Visual Studio Code)
  ```
 npm install nodemon --save-dev
 ```
-###### Proceder a série de instalações abaixo garantirá pleno funcionamento do projeto:
-
-#### 📚 Bibliotecas utilizadas:
-
-###### instalar o Express
-```
-npm install express
-```
-###### instalar o driver do PostgreSQL
-```
-npm install pg
-```
-###### instalar elementos do Sequelize
-```
-npm install sequelize
-```
-```
-npm install -g sequelize-cli
-```
-###### Segurança e validações
-```
-npm install cors
-```
-```
-npm install dotenv
-```
-```
-npm install bcryptjs
-```
-```
-npm install jsonwebtoken
-```
-###### instalar o axios
-```
-npm install axios
-```
-###### Elementos do Swagger UI
-```
-npm install swagger-ui-express
-```
-```
-npm install swagger-autogen
-```
-
 
 ## ⚙️ Executando 
 
@@ -95,7 +85,10 @@ npm install swagger-autogen
 1º `npm run swagger`
 2º `npm run start:dev`
 
-###### Rodar uma migrations:
+###### Criar o banco de dados:
+`sequelize db:create`
+
+###### Rodar as migrations:
 `sequelize db:migrate`
 
 ###### Executar os seeders:
@@ -105,17 +98,8 @@ npm install swagger-autogen
 `https://http://localhost:3000/docs/`
 
 #### Endpoints criados e demonstração no Swagger:
-![EndPoinst demonstrados no Swagger](https://github.com/marcelovntr/Projeto-Modulo-II/blob/develop/src/images/endPoinstFull.jpg)
+EndPoinst: acesso e funcionalidades de usuário elocais:
+![EndPoinst: acesso e funcionalidades de usuário elocais:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsTop.jpg)
 
-## 🛠️ Melhorias aplicáveis:
-
-● Introdução de biblioteca de validações para melhoria do projeto, como por maior reutilização do código e aumento de segurança
-(em virtude do tempo não foi possível inserir);
-● Aplicação de validações e/ou melhoria no código para tratar de requisições que utilizem CEPs inexistentes;
-● Aplicação de validação consistente para tokens com prazo expirado;
-● Reavaliação do posicionamento da rota de geração de link e do local de aplicação da função de obter link a partir das coordenadas.
-
-### 📹 Link do vídeo de defesa do projeto:
-
-https://drive.google.com/file/d/1RDoy1R6rYrgOYxjvCTD715gw6LqOlsy3/view?usp=drive_link
-
+EndPoinst: obtenção de link do maps e dashborad:
+![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsbase.jpg)
