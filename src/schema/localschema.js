@@ -20,9 +20,7 @@ const localSchema = Yup.object().shape({
   cidade: Yup.string()
     .required("A cidade é obrigatória.")
     .max(100, "A cidade deve ter no máximo 100 caracteres."),
-  estado: Yup.string()
-    .required("O estado é obrigatório.")
-    .length(100, "O estado deve ter no máximo 100 caracteres."),
+  estado: Yup.string().required("O estado é obrigatório."),
   latitude: Yup.string()
     .required("A latitude é obrigatória.")
     .matches(/^-?\d+(\.\d+)?$/, "A latitude deve ser um número válido."),

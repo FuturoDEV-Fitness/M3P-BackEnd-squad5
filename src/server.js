@@ -5,7 +5,7 @@ const connection = require("./database/connection");
 
 require("./models/Associations");
 
-const APP_PORT = process.env.APP_PORT ||3001;
+const APP_PORT = process.env.APP_PORT;
 
 class Server {
   constructor(server = express()) {

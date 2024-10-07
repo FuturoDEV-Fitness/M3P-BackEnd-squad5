@@ -1,14 +1,11 @@
 const localSchema = require("./localschema");
 
-const validateLocalSchema = async (data) => {
+const validateLocalSchema = async (req, res, next) => {
   try {
-    await localSchema.validate(data, {
-      abortEarly: false,
-      context: { partial: true },
-    });
-    return { valid: true, errors: null };
+    await localSchema.validate(req.body, { abortEarly: false });
+    next();
   } catch (err) {
-    return { valid: false, errors: err.errors };
+    return res.status(400).json({ errors: err.errors });
   }
 };
 

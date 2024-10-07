@@ -1,26 +1,15 @@
-const Usuario = require('./Usuario');
-const Local = require('./Local');
-const Endereco = require('./Local');
-const Pratica = require('./Pratica')
-
+const Usuario = require("./Usuario");
+const Local = require("./Local");
+const Pratica = require("./Pratica");
+const Endereco = require("./Endereco");
 
 Usuario.hasMany(Local, {
-  foreignKey: 'id_usuario'
-   
+  foreignKey: "id_usuario",
+  as: "locais",
 });
 Local.belongsTo(Usuario, {
-  foreignKey: 'id_usuario'
-   
-});
-
-Endereco.belongsTo(Usuario, {
-  foreignKey: "idUsuario",
-  as: "endereco_usuario",
-});
-
-Usuario.hasOne(Endereco, {
-  foreignKey: 'idUsuario'
-   
+  foreignKey: "id_usuario",
+  as: "usuario",
 });
 
 Local.hasMany(Pratica, {
@@ -32,6 +21,14 @@ Pratica.belongsTo(Local, {
   as: "local",
 });
 
+Usuario.hasMany(Endereco, {
+  foreignKey: "usuarioId",
+  as: "enderecos",
+});
+Endereco.belongsTo(Usuario, {
+  foreignKey: "usuarioId",
+  as: "usuario",
+});
 
 module.exports = {
   Usuario,
