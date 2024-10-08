@@ -103,3 +103,21 @@ EndPoinst: acesso e funcionalidades de usuário elocais:
 
 EndPoinst: obtenção de link do maps e dashborad:
 ![EndPoinst: obtenção de link do maps e dashborad:](https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5/blob/feature-013/src/images/endPointsbase.jpg)
+
+
+## Instruções para Executar o Docker
+
+1. Certifique-se de ter o [Docker](https://www.docker.com/get-started) e o [Docker Compose](https://docs.docker.com/compose/) instalados.
+2. Clone este repositório:
+   ```bash
+   git clone https://github.com/FuturoDEV-Fitness/M3P-BackEnd-squad5
+   ```
+3. Navegue até o diretório do projeto:
+   ```bash
+   cd NOME_DO_REPOSITORIO
+   ```
+4. Crie um arquivo `.env` com as variáveis necessárias.
+5. Execute o comando:
+   ```bash
+   docker-compose up
+   ```
