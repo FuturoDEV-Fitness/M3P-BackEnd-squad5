@@ -15,7 +15,7 @@ module.exports = {
         allowNull: false,
       },
       sexo: {
-        type: Sequelize.ENUM("masculino", "feminino", "outro"),
+        type: Sequelize.ENUM("Masculino", "Feminino", "Outro"),
         allowNull: true,
       },
       cpf: {
@@ -27,10 +27,6 @@ module.exports = {
         allowNull: false,
         unique: true,
         type: Sequelize.STRING,
-      },
-      endereco: {
-        type: Sequelize.STRING(200),
-        allowNull: false,
       },
       senha: {
         type: Sequelize.STRING,

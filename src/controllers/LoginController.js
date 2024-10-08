@@ -1,62 +1,62 @@
-const { compareSync } = require("bcryptjs");
 const { sign } = require("jsonwebtoken");
 const Usuario = require("../models/Usuario");
-const emailPattern = new RegExp(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+const Encryption = require("../utils/Encryption");
 
 class LoginController {
   async acesso(request, response) {
     try {
-      const dados = request.body;
-      /* verificações*/
-      if (!dados.email || !dados.senha) {
+      const { email, senha } = request.body;
+
+      // Verificações se o email e a senha estão presentes
+      if (!email || !senha) {
         return response
           .status(400)
-          .json({ mensagem: "email e senha são necessários!" });
+          .json({ mensagem: "Email e senha são necessários!" });
       }
 
-      if (!emailPattern.test(dados.email)) {
-        return response
-          .status(400)
-          .json({ mensagem: "formato de email inválido!" });
-      }
-      if (dados.senha.length !== 10) {
-        return response.status(400).json({
-          mensagem: "a senha deve conter 10 dígitos",
-        });
-      }
-      /*query*/
+      // Consulta o usuário no banco de dados
       const usuario = await Usuario.findOne({
         where: {
-          email: dados.email,
+          email: email,
         },
       });
 
+      // Verifica se o usuário foi encontrado
       if (!usuario) {
-        return response.status(404).json({ mensagem: "usuário inexistente!" });
-      }
-
-      /*compareSync */
-      const senhaComparada = compareSync(dados.senha, usuario.senha);
-      if (senhaComparada === false) {
         return response
           .status(404)
-          .json({
-            mensagem: "Conta não encontrada para este email e/ou senha",
-          });
+          .json({ mensagem: "Conta não encontrada para este email ou senha" });
       }
 
+      // Compara a senha informada com a senha armazenada
+      const senhaComparada = await Encryption.compare(senha, usuario.senha);
+
+      // Verifica se a senha está correta
+      if (!senhaComparada) {
+        return response
+          .status(404)
+          .json({ mensagem: "Conta não encontrada para este email ou senha" });
+      }
+
+      // Gera o token JWT
       const token = sign(
-        { id: usuario.id, nome: usuario.nome, CEP: usuario.cep },
+        { id: usuario.id, nome: usuario.nome, cep: usuario.cep },
         process.env.JWT_SECRET,
         { expiresIn: "1d" }
       );
 
-      response.status(201).json({
+      // Retorna o token e o ID do usuário
+      return response.status(201).json({
         token: token,
-        id: usuario.id,})
-    } catch (error) { response.status(500).json({mensagem: "Houve erro ao realizar login"})
+        id: usuario.id,
+      });
+    } catch (error) {
+      console.error("Erro no login:", error);
+      return response
+        .status(500)
+        .json({ mensagem: "Houve erro ao realizar login" });
+    }
   }
-}
 }
 
 module.exports = new LoginController();

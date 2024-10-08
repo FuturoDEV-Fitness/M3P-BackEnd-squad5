@@ -1,12 +1,17 @@
-const { Router } = require('express')
-const LocalController = require('../controllers/LocalController')
-const MapController = require('../controllers/MapController')
+const { Router } = require("express");
+const LocalController = require("../controllers/LocalController");
+const MapController = require("../controllers/MapController");
+const auth = require("../middlewares/auth");
+const validateLocalSchema = require("../schema/validatelocal");
 
+const locaisRoutes = new Router();
 
-const locaisRoutes = new Router()
-
-locaisRoutes.post('/', LocalController.cadastro
-    /*
+locaisRoutes.post(
+  "/",
+  auth,
+  validateLocalSchema,
+  LocalController.cadastrarLocal
+  /*
 #swagger.tags = ['Locais'],
 #swagger.description = 'Endpoint para cadastra novo local',
 #swagger.parameters['cadastrarLocal']= {
@@ -23,10 +28,12 @@ locaisRoutes.post('/', LocalController.cadastro
 
 },
 */
-)
+);
 // 'cadastrarLocal'
-locaisRoutes.get('/', LocalController.listarTodos
- /*
+locaisRoutes.get(
+  "/",
+  LocalController.listarLocais
+  /*
     #swagger.tags = ['Locais'],
     #swagger.description = 'Endpoint para listar todos os locais cadastrados',
     #swagger.responses[200] = {
@@ -43,10 +50,13 @@ locaisRoutes.get('/', LocalController.listarTodos
         }
     }
     */
-)
+);
 // 'listarTodos'
-locaisRoutes.get('/:local_id', LocalController.listarEspecifico
-    /*
+locaisRoutes.get(
+  "/:id",
+  auth,
+  LocalController.listarUmLocal
+  /*
     #swagger.tags = ['Locais'],
     #swagger.description = 'Endpoint para mostrar um local específico',
     #swagger.parameters['local_id']= {
@@ -59,10 +69,13 @@ locaisRoutes.get('/:local_id', LocalController.listarEspecifico
     }
 
     */
-)
+);
 // 'listarEspecífico
-locaisRoutes.delete('/:local_id', LocalController.deletar
-        /*
+locaisRoutes.delete(
+  "/:local_id",
+  auth,
+  LocalController.deletarLocal
+  /*
     #swagger.tags = ['Locais'],
     #swagger.description = 'Endpoint para deletar um local específico',
     #swagger.parameters['local_id']= {
@@ -75,10 +88,14 @@ locaisRoutes.delete('/:local_id', LocalController.deletar
     }
 
     */
-)
+);
 //'deletarEspecífico'
-locaisRoutes.put('/:local_id', LocalController.atualizar
-    /*
+locaisRoutes.put(
+  "/:id",
+  auth,
+  validateLocalSchema,
+  LocalController.atualizarLocal
+  /*
     #swagger.tags = ['Locais']
     #swagger.description = 'Endpoint para atualizar um local específico baseado no ID fornecido.'
     #swagger.parameters['local_id'] = {
@@ -102,12 +119,15 @@ locaisRoutes.put('/:local_id', LocalController.atualizar
         }
     }
     */
-)
+);
 //'atualizar'
 
-locaisRoutes.get('/maps/:local_id', MapController.listarLinK
+locaisRoutes.get(
+  "/maps/:local_id",
+  auth,
+  MapController.listarLinK
 
-     /*
+  /*
     #swagger.tags = ['Link'],
     #swagger.description = 'Endpoint para gerar link do Google Maps',
     #swagger.parameters['local_id']= {
@@ -120,7 +140,7 @@ locaisRoutes.get('/maps/:local_id', MapController.listarLinK
     }
 
     */
-)
+);
 //'obterLink'
 
-module.exports = locaisRoutes
+module.exports = locaisRoutes;
